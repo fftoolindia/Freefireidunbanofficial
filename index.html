@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Apex Carnage Live — Free Fire ID Unban</title>
 
-<!-- CLIENT-SIDE OCR ENGINE (NO BACKEND REQUIRED) -->
+<!-- CLIENT-SIDE OCR ENGINE -->
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 
 <style>
@@ -41,9 +41,7 @@ body {
   padding: 40px 24px; min-height: 100vh; z-index: 1;
 }
 
-/* =========================================
-   INTRO / LANDING OVERLAY (NEW)
-   ========================================= */
+/* INTRO / LANDING OVERLAY */
 #intro-landing-overlay {
   position: fixed;
   inset: 0;
@@ -242,8 +240,6 @@ body {
   gap: 12px;
   box-shadow: 0 0 25px rgba(0, 168, 255, 0.7), inset 0 0 12px rgba(255, 255, 255, 0.35);
   transition: all 0.3s ease;
-  width: auto;
-  margin-top: 0;
 }
 
 .intro-glowing-btn:hover {
@@ -257,9 +253,7 @@ body {
   fill: #ffffff;
 }
 
-/* =========================================
-   2. ANIMATIONS & PROFILE LOGO WITH WAVE
-   ========================================= */
+/* ANIMATIONS & PROFILE LOGO */
 @keyframes nanoGlow {
   0% { box-shadow: 0 0 25px rgba(255, 74, 74, 0.5), inset 0 0 10px rgba(255, 74, 74, 0.1); border-color: rgba(255, 74, 74, 0.5); }
   50% { box-shadow: 0 0 35px rgba(0, 174, 255, 0.5), inset 0 0 15px rgba(0, 174, 255, 0.2); border-color: rgba(0, 174, 255, 0.6); }
@@ -314,9 +308,7 @@ body {
   position: relative;
 }
 
-/* =========================================
-   3. CARD & TYPOGRAPHY
-   ========================================= */
+/* CARD & TYPOGRAPHY */
 .card {
   width: min(520px, 100%); padding: 35px;
   border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px;
@@ -336,9 +328,7 @@ h1 span { background: linear-gradient(90deg, #ff4a4a, #ff8a4a); -webkit-backgrou
 .step-one { font-weight: 800; font-size: 14px; color: #ff4a4a; letter-spacing: 2px; margin-bottom: 12px; text-transform: uppercase; }
 .subtitle { color: #94a3b8; line-height: 1.6; margin-bottom: 28px; font-size: 15px; font-weight: 400; }
 
-/* =========================================
-   4. FORM ELEMENTS
-   ========================================= */
+/* FORM ELEMENTS */
 label { display: block; font-size: 13px; font-weight: 700; color: #cbd5e1; margin: 16px 0 8px; letter-spacing: 0.5px; text-align: left; }
 
 input {
@@ -369,9 +359,7 @@ button {
 button:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(255, 51, 51, 0.4); }
 button:disabled { background: #334155; box-shadow: none; cursor: not-allowed; color: #94a3b8; transform: none; }
 
-/* =========================================
-   5. PROGRESS BAR & MODALS
-   ========================================= */
+/* PROGRESS & MODALS */
 .progress-wrap { display: none; margin-top: 25px; }
 .progress-top { display: flex; justify-content: space-between; font-size: 13px; color: #94a3b8; margin-bottom: 9px; font-weight: 600; }
 .bar { height: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 99px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.5); }
@@ -394,24 +382,17 @@ button:disabled { background: #334155; box-shadow: none; cursor: not-allowed; co
 .socials { display: flex; flex-direction: column; gap: 10px; margin: 15px 0; }
 .socials a { text-decoration: none; color: #fff; padding: 15px; border-radius: 14px; font-weight: 700; display: block; font-size: 15px; transition: transform 0.2s ease; cursor: pointer; }
 .socials a:hover { transform: scale(1.02); }
-.tg { background: linear-gradient(135deg, #168dcc, #28a5e8); box-shadow: 0 8px 16px rgba(22, 141, 204, 0.2); }
+.tg { background: linear-gradient(135deg, #168dcc, #28a5e8); box-shadow: 0 8px 16px rgba(220, 39, 67, 0.2); }
 .ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); box-shadow: 0 8px 16px rgba(220, 39, 67, 0.2); }
 
 .ss-upload { background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(255, 255, 255, 0.15); margin-top: -5px; padding: 10px; border-radius: 12px; margin-bottom: 5px; transition: opacity 0.3s ease; }
 
-.verify-status {
-  font-size: 13px;
-  font-weight: 600;
-  margin-top: 12px;
-  min-height: 20px;
-}
+.verify-status { font-size: 13px; font-weight: 600; margin-top: 12px; min-height: 20px; }
 .verify-status.scanning { color: #66fcf1; }
 .verify-status.failed { color: #ff4a4a; }
 .verify-status.passed { color: #22c55e; }
 
-/* =========================================
-   6. FAQ SECTION & FOOTER
-   ========================================= */
+/* FAQ & FOOTER */
 .faq-section { width: min(520px, 100%); margin-bottom: 40px; animation: fadeInUp 1s ease-out; }
 .faq-section h3 { color: #fff; font-size: 20px; margin-bottom: 15px; font-weight: 700; text-align: center; }
 .faq-item {
@@ -426,7 +407,7 @@ footer { text-align: center; color: #64748b; font-size: 12px; padding-bottom: 20
 footer a { color: #ff4a4a; text-decoration: none; font-weight: bold; }
 
 /* =========================================
-   7. DASHBOARD (PERSONAL TIMER ONLY)
+   DASHBOARD & CASINO-GRADE SPIN WHEEL
    ========================================= */
 .dashboard-container {
   display: none; width: min(550px, 100%); 
@@ -434,38 +415,186 @@ footer a { color: #ff4a4a; text-decoration: none; font-weight: bold; }
 }
 .dash-card {
   background: rgba(16, 18, 27, 0.75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 35px;
-  box-shadow: 0 0 25px rgba(0, 174, 255, 0.2); text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 30px;
+  box-shadow: 0 0 25px rgba(0, 174, 255, 0.2); text-align: center; margin-bottom: 30px;
 }
 .live-timer-header {
-  background: rgba(0, 0, 0, 0.4); padding: 30px 20px; border-radius: 14px;
+  background: rgba(0, 0, 0, 0.4); padding: 25px 20px; border-radius: 14px;
   border: 1px dashed #eccc68;
+}
+
+.spin-card {
+  background: radial-gradient(circle at 50% 10%, rgba(255, 215, 0, 0.08), rgba(15, 17, 26, 0.95));
+  border: 2px solid rgba(255, 215, 0, 0.45);
+  box-shadow: 0 0 45px rgba(255, 215, 0, 0.25), inset 0 0 20px rgba(255, 215, 0, 0.05);
+  border-radius: 28px;
+  padding: 30px 15px;
+  text-align: center;
+}
+
+.spin-card h3 {
+  color: #ffd700;
+  font-size: 24px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+}
+
+.spin-card p {
+  color: #94a3b8;
+  font-size: 13px;
+  margin-top: 6px;
+  margin-bottom: 22px;
+}
+
+.spin-user-form {
+  max-width: 320px;
+  margin: 0 auto 24px;
+}
+
+.spin-user-form input {
+  padding: 14px 18px;
+  font-size: 14px;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  background: rgba(0, 0, 0, 0.6);
+}
+.spin-user-form input:focus {
+  border-color: #ffd700;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+}
+
+/* Casino Wheel Wrapper */
+.wheel-outer-wrapper {
+  position: relative;
+  width: 330px;
+  height: 330px;
+  margin: 0 auto 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Wheel Top Pointer */
+.wheel-pointer {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 42px;
+  background: linear-gradient(180deg, #00ff87, #00b0ff);
+  clip-path: polygon(50% 100%, 0 0, 100% 0);
+  z-index: 20;
+  filter: drop-shadow(0 4px 10px rgba(0, 255, 135, 0.8));
+}
+
+/* Gold Studded Outer Ring */
+.wheel-border {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #1a1a24;
+  border: 10px solid #d4af37;
+  outline: 4px solid #7a5c1e;
+  box-shadow: 
+    0 0 30px rgba(212, 175, 55, 0.8),
+    inset 0 0 25px rgba(0, 0, 0, 0.95);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#wheelCanvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transition: transform 5.5s cubic-bezier(0.12, 0.88, 0.28, 1);
+}
+
+/* Exact Middle SPIN Button */
+.wheel-center-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 78px;
+  height: 78px;
+  background: radial-gradient(circle at 35% 35%, #ff4b4b, #8b0000 85%);
+  border: 4px solid #fff;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: 900;
+  font-size: 15px;
+  letter-spacing: 1.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 
+    0 0 25px rgba(255, 75, 75, 0.9),
+    inset 0 4px 8px rgba(255, 255, 255, 0.4),
+    inset 0 -4px 8px rgba(0, 0, 0, 0.6);
+  z-index: 15;
+  user-select: none;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+  margin-top: 0;
+  padding: 0;
+}
+.wheel-center-btn:hover:not(:disabled) {
+  transform: translate(-50%, -50%) scale(1.05);
+  box-shadow: 0 0 35px rgba(255, 75, 75, 1);
+}
+.wheel-center-btn:active:not(:disabled) {
+  transform: translate(-50%, -50%) scale(0.94);
+}
+.wheel-center-btn:disabled {
+  background: #3a3f51;
+  border-color: #555b6e;
+  cursor: not-allowed;
+  box-shadow: none;
+  color: #8c93a8;
+}
+
+.wheel-result {
+  min-height: 52px;
+  font-weight: 700;
+  font-size: 15px;
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 </style>
 </head>
 <body>
 
-<!-- TARGET ANIMATED INTRO OVERLAY -->
+<!-- INTRO OVERLAY -->
 <div id="intro-landing-overlay">
   <div class="brand-intro-box" id="brandIntroBox">
     <div class="brand-row">
-      <div class="brand-text" id="animatedBrandText">
-        <!-- Generated letter-by-letter dynamically -->
-      </div>
+      <div class="brand-text" id="animatedBrandText"></div>
       <div class="blue-tick-badge" id="blueTickBadge">✓</div>
     </div>
     <div class="brand-underline" id="brandUnderline"></div>
   </div>
 
   <div class="intro-action-container" id="introActionContainer">
-    <!-- DISCLAIMER BOX (ABOVE "CLICK TO OPEN") -->
     <div class="intro-disclaimer-box">
       <div class="intro-disclaimer-title">Disclaimer</div>
       <p class="intro-disclaimer-text">
-        This website and associated content are created strictly for educational purposes and fair use, exploring gaming technology and cybersecurity concepts. We do not engage in or promote scams, phishing, or unauthorized third-party support services. All information is provided for research and awareness.
+        This website and associated content are created strictly for educational purposes and fair use, exploring gaming technology and cybersecurity concepts.
       </p>
     </div>
-
     <div class="intro-small-hint">CLICK TO OPEN</div>
     <div class="intro-main-label">UNBAN YOUR ID WEBSITE</div>
     <div class="intro-arrow">↓</div>
@@ -485,7 +614,6 @@ footer a { color: #ff4a4a; text-decoration: none; font-weight: bold; }
   <source src="https://raw.githubusercontent.com/Rajsekhar001/PR-BOT-/main/apexsongnew%20.wav" type="audio/wav">
 </audio>
 
-<!-- ERROR & END VOICE SMS -->
 <audio id="errorAudio" preload="auto">
   <source src="https://raw.githubusercontent.com/Rajsekhar001/PR-BOT-/main/errorsms.mp3" type="audio/mpeg">
 </audio>
@@ -543,7 +671,7 @@ footer a { color: #ff4a4a; text-decoration: none; font-weight: bold; }
     </div>
   </div>
 
-  <!-- DASHBOARD -->
+  <!-- DASHBOARD + RIGGED LUCKY SPIN -->
   <div class="dashboard-container" id="dashboardContainer">
     <div class="dash-card">
       <h2 style="color: #fff; margin-bottom: 25px;">Live Unban Database</h2>
@@ -551,6 +679,29 @@ footer a { color: #ff4a4a; text-decoration: none; font-weight: bold; }
       <div class="live-timer-header">
           <p style="margin: 0 0 15px 0; color: #94a3b8; font-size: 16px;">Your ban UID: <br><strong id="myUid" style="color: #fff; font-family: monospace; font-size: 22px; display: inline-block; margin-top: 5px;"></strong></p>
           <div id="myLiveTimer" style="color: #eccc68; font-size: 26px; font-weight: bold; letter-spacing: 1px;">Calculating...</div>
+      </div>
+    </div>
+
+    <!-- HIGH-ROLLER CASINO SPIN CARD -->
+    <div class="dash-card spin-card">
+      <h3>🎰 Mega Lucky Wheel</h3>
+      <p>Enter your gaming name to unlock the VIP spin and claim your reward!</p>
+
+      <div class="spin-user-form">
+        <input type="text" id="spinUserName" placeholder="Enter Your Name to Spin" maxlength="25">
+      </div>
+
+      <div class="wheel-outer-wrapper">
+        <div class="wheel-pointer"></div>
+        <div class="wheel-border">
+          <canvas id="wheelCanvas" width="330" height="330"></canvas>
+        </div>
+        <!-- Button strictly in center -->
+        <button class="wheel-center-btn" id="spinBtn" disabled>SPIN</button>
+      </div>
+
+      <div class="wheel-result" id="wheelResult" style="color: #94a3b8;">
+        Enter your name above to activate the wheel.
       </div>
     </div>
   </div>
@@ -561,12 +712,11 @@ footer a { color: #ff4a4a; text-decoration: none; font-weight: bold; }
   </footer>
 </div>
 
-<!-- SOCIAL VERIFICATION MODAL -->
+<!-- MODALS -->
 <div class="modal-bg" id="modalBg">
   <div class="modal" id="modalBox">
     <h2>Step 2: Community Verification</h2>
     <p>Follow the official channels below to prove you are human, then upload the screenshots.</p>
-    
     <div class="socials">
       <a class="tg" id="tgLink" href="https://t.me/+GJ738f9FKc5mOWRl" target="_blank" rel="noopener">1. Follow on Telegram</a>
       <div class="ss-upload" id="tgUploadWrapper" style="opacity: 0.5; pointer-events: none;">
@@ -586,7 +736,6 @@ footer a { color: #ff4a4a; text-decoration: none; font-weight: bold; }
   </div>
 </div>
 
-<!-- SUCCESS MESSAGE MODAL -->
 <div class="modal-bg" id="successModalBg">
   <div class="modal" id="successBox" style="border: 2px solid rgba(34, 197, 94, 0.4); box-shadow: 0 20px 60px rgba(34, 197, 94, 0.25); border-radius: 24px; padding: 30px; text-align: center;">
     <p style="color: #94a3b8; font-size: 12px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">Verification Complete</p>
@@ -635,7 +784,6 @@ footer a { color: #ff4a4a; text-decoration: none; font-weight: bold; }
   const confirmBtn = document.getElementById('confirmBtn');
   const verifyStatusText = document.getElementById('verifyStatusText');
 
-  // AUDIO REFERENCES
   const bgSongAudio = document.getElementById('bgSongAudio');
   const errorAudio = document.getElementById('errorAudio');
   const endAudio = document.getElementById('endAudio');
@@ -691,10 +839,10 @@ footer a { color: #ff4a4a; text-decoration: none; font-weight: bold; }
     document.getElementById('dashboardContainer').style.display = 'block';
     
     document.getElementById('myUid').innerText = maskUID(data.UID);
-    startMyTimer(data);
+    startMyTimer(); // 10 SECOND TESTING TIMER
+    initLuckyWheel();
   }
 
-  // FORM SUBMISSION & AUDIO TOGGLING
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -759,7 +907,6 @@ footer a { color: #ff4a4a; text-decoration: none; font-weight: bold; }
     }
   });
 
-  // SCREENSHOT SELECTION STATE HANDLER
   function checkScreenshots() {
     if (tgScreenshot.files.length > 0 && igScreenshot.files.length > 0) {
       confirmBtn.disabled = false;
@@ -778,56 +925,41 @@ footer a { color: #ff4a4a; text-decoration: none; font-weight: bold; }
   tgScreenshot.addEventListener('change', checkScreenshots);
   igScreenshot.addEventListener('change', checkScreenshots);
 
-  function calculateDays(subNo) {
-      let extra = Math.floor((subNo - 501) / 100);
-      let calculatedDays = 7 + (extra > 0 ? extra : 0);
-      return Math.min(calculatedDays, 10);
-  }
-
   function maskUID(uid) {
       return (uid && uid.length > 3) ? uid.slice(0, -3) + "***" : uid;
   }
 
-  function startMyTimer(data) {
+  /* =========================================
+     10-SECOND TIMER (TESTING OVERRIDE)
+     ========================================= */
+  function startMyTimer() {
       const myLiveTimer = document.getElementById('myLiveTimer');
-      const totalDays = calculateDays(data.subNo || 501);
-      const startTime = data.timestampMs || new Date().getTime();
-      const unbanDate = startTime + (totalDays * 24 * 60 * 60 * 1000);
+      let countdown = 10; // Exactly 10 seconds
 
       if(mainTimerInterval) clearInterval(mainTimerInterval);
 
-      mainTimerInterval = setInterval(() => {
-          const now = new Date().getTime();
-          const distance = unbanDate - now;
+      myLiveTimer.innerHTML = `00 Days 00 Hrs 00 Min ${countdown} Sec`;
 
-          if (distance < 0) {
+      mainTimerInterval = setInterval(() => {
+          countdown--;
+          if (countdown <= 0) {
               clearInterval(mainTimerInterval);
               myLiveTimer.innerHTML = "STATUS: UNBANNED! ✅";
+              myLiveTimer.style.color = "#22c55e";
           } else {
-              const d = Math.floor(distance / (1000 * 60 * 60 * 24));
-              const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-              const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-              const s = Math.floor((distance % (1000 * 60)) / 1000);
-              myLiveTimer.innerHTML = `${d} Days ${h} Hrs ${m} Min ${s} Sec`;
+              myLiveTimer.innerHTML = `00 Days 00 Hrs 00 Min ${countdown < 10 ? '0' + countdown : countdown} Sec`;
           }
       }, 1000);
   }
 
-  // SIRF INSTAGRAM SCREENSHOT RESET HOGA (Telegram safe rahega)
   function resetInstagramVerification(errorReason) {
     verifyStatusText.className = "verify-status failed";
     verifyStatusText.textContent = errorReason;
-    
-    // Telegram intact rahega, sirf Instagram reset hoga
     igScreenshot.value = '';
-    
     confirmBtn.disabled = true;
     confirmBtn.textContent = "Re-upload Instagram screenshot";
   }
   
-  // =========================================================================
-  // CLIENT-SIDE OCR ENGINE
-  // =========================================================================
   confirmBtn.addEventListener('click', async () => {
     const igFile = igScreenshot.files[0];
     if (!igFile) {
@@ -854,23 +986,19 @@ footer a { color: #ff4a4a; text-decoration: none; font-weight: bold; }
       );
 
       const ocrText = (result.data.text || "").toLowerCase();
-
       const isFollowing = ocrText.includes("following");
       const isProfileMatch = ocrText.includes("apex.carnage.live") || ocrText.includes("rajsekhar");
 
-      // Failure 1: 'Following' status missing
       if (!isFollowing) {
         resetInstagramVerification("Verification Failed: 'Following' not found. Please upload correct Instagram screenshot.");
         return;
       }
 
-      // Failure 2: Profile mismatch
       if (!isProfileMatch) {
         resetInstagramVerification("Verification Failed: Profile name not matched. Follow @apex.carnage.live");
         return;
       }
 
-      // Verification Success: Proceed
       verifyStatusText.className = "verify-status passed";
       verifyStatusText.textContent = "Verified! Saving record...";
       confirmBtn.textContent = "Uploading to Database...";
@@ -930,7 +1058,7 @@ footer a { color: #ff4a4a; text-decoration: none; font-weight: bold; }
   }
 </script>
 
-<!-- INTRO ANIMATION CONTROLLER -->
+<!-- INTRO & AUDIO -->
 <script>
   window.addEventListener('DOMContentLoaded', () => {
     const brandTextEl = document.getElementById('animatedBrandText');
@@ -983,10 +1111,7 @@ footer a { color: #ff4a4a; text-decoration: none; font-weight: bold; }
       startAudioFlow();
     });
   });
-</script>
 
-<!-- INITIAL AUDIO FLOW -->
-<script>
   const welcomeAudio = document.getElementById('welcomeAudio');
   const bgSongAudio = document.getElementById('bgSongAudio');
   let audioStarted = false;
@@ -1014,10 +1139,158 @@ footer a { color: #ff4a4a; text-decoration: none; font-weight: bold; }
   window.addEventListener('load', startAudioFlow);
   document.addEventListener('click', startAudioFlow, { once: true });
   document.addEventListener('touchstart', startAudioFlow, { once: true });
-  document.getElementById('uid').addEventListener('focus', startAudioFlow, { once: true });
 </script>
 
-<!-- FAQ LOGIC & BACKGROUND CANVAS -->
+<!-- PROFESSIONAL WHEEL ENGINE (RIGGED TO ₹799) -->
+<script>
+  const spinSlices = [
+    { label: "Try Again", icon: "↺", color1: "#1e272e", color2: "#2f3640", textColor: "#dcdde1" },
+    { label: "₹50 Win", icon: "💰", color1: "#d35400", color2: "#e67e22", textColor: "#ffffff" },
+    { label: "Try Again", icon: "↺", color1: "#2d3436", color2: "#1e272e", textColor: "#dcdde1" },
+    { label: "₹10 Win", icon: "🪙", color1: "#0097e6", color2: "#00a8ff", textColor: "#ffffff" },
+    { label: "Mega ₹799", icon: "👑", color1: "#c0392b", color2: "#e74c3c", textColor: "#ffd700" }, // Index 4: Rigged Target
+    { label: "Try Again", icon: "↺", color1: "#1e272e", color2: "#2f3640", textColor: "#dcdde1" },
+    { label: "₹100 Win", icon: "💎", color1: "#8e44ad", color2: "#9b59b6", textColor: "#ffffff" },
+    { label: "₹10 Win", icon: "🪙", color1: "#27ae60", color2: "#2ecc71", textColor: "#ffffff" }
+  ];
+
+  let currentWheelAngle = 0;
+  let isSpinning = false;
+
+  function initLuckyWheel() {
+    const canvas = document.getElementById("wheelCanvas");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    const numSlices = spinSlices.length;
+    const arc = (2 * Math.PI) / numSlices;
+    const radius = canvas.width / 2;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    spinSlices.forEach((slice, i) => {
+      const angle = i * arc;
+      
+      // Radial slice gradient for realistic depth
+      const grad = ctx.createRadialGradient(radius, radius, 20, radius, radius, radius);
+      grad.addColorStop(0, slice.color1);
+      grad.addColorStop(1, slice.color2);
+
+      ctx.beginPath();
+      ctx.fillStyle = grad;
+      ctx.moveTo(radius, radius);
+      ctx.arc(radius, radius, radius - 2, angle, angle + arc);
+      ctx.lineTo(radius, radius);
+      ctx.fill();
+
+      // Golden dividing lines
+      ctx.strokeStyle = "rgba(255, 215, 0, 0.4)";
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Outer light dots around slice
+      const dotAngle = angle + arc / 2;
+      const dotX = radius + Math.cos(dotAngle) * (radius - 12);
+      const dotY = radius + Math.sin(dotAngle) * (radius - 12);
+      ctx.beginPath();
+      ctx.arc(dotX, dotY, 3, 0, Math.PI * 2);
+      ctx.fillStyle = "#ffd700";
+      ctx.shadowColor = "#ffd700";
+      ctx.shadowBlur = 6;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // Slice label and icon
+      ctx.save();
+      ctx.translate(radius, radius);
+      ctx.rotate(angle + arc / 2);
+      ctx.textAlign = "right";
+      
+      // Icon
+      ctx.font = "14px 'Plus Jakarta Sans', Arial";
+      ctx.fillText(slice.icon, radius - 24, -4);
+
+      // Text
+      ctx.fillStyle = slice.textColor;
+      ctx.font = "bold 13px 'Plus Jakarta Sans', Arial, sans-serif";
+      ctx.fillText(slice.label, radius - 24, 14);
+      ctx.restore();
+    });
+  }
+
+  const spinUserNameInput = document.getElementById("spinUserName");
+  const spinBtn = document.getElementById("spinBtn");
+  const wheelResult = document.getElementById("wheelResult");
+  const wheelCanvas = document.getElementById("wheelCanvas");
+
+  spinUserNameInput.addEventListener("input", () => {
+    if (spinUserNameInput.value.trim().length >= 2 && !isSpinning) {
+      spinBtn.disabled = false;
+      wheelResult.innerHTML = `Welcome <b>${spinUserNameInput.value.trim()}</b>! Click SPIN in the center!`;
+      wheelResult.style.color = "#00e676";
+    } else {
+      spinBtn.disabled = true;
+      wheelResult.innerHTML = "Enter your name above to activate the wheel.";
+      wheelResult.style.color = "#94a3b8";
+    }
+  });
+
+  function generateFakeRedeemCode() {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let parts = [];
+    for (let p = 0; p < 4; p++) {
+      let str = "";
+      for (let i = 0; i < 4; i++) str += chars.charAt(Math.floor(Math.random() * chars.length));
+      parts.push(str);
+    }
+    return parts.join("-");
+  }
+
+  // SPIN EVENT HANDLER (FORCED TO INDEX 4: MEGA ₹799)
+  spinBtn.addEventListener("click", () => {
+    if (isSpinning || spinUserNameInput.value.trim().length < 2) return;
+
+    isSpinning = true;
+    spinBtn.disabled = true;
+    spinUserNameInput.disabled = true;
+    wheelResult.innerHTML = "🌀 Spinning the high-roller wheel... High luck detected!";
+    wheelResult.style.color = "#ffd700";
+
+    // Rigged winning target: Index 4 ("Mega ₹799")
+    const winningIndex = 4;
+    const sliceAngle = 360 / spinSlices.length; // 45 deg
+
+    // Top pointer is located at 270 degrees
+    const sliceCenter = winningIndex * sliceAngle + (sliceAngle / 2);
+    const targetOffset = 270 - sliceCenter;
+
+    // 6 full spins + target alignment
+    const fullSpins = 6 * 360;
+    const finalAngle = currentWheelAngle + fullSpins + (targetOffset - (currentWheelAngle % 360));
+
+    currentWheelAngle = finalAngle;
+    wheelCanvas.style.transform = `rotate(${finalAngle}deg)`;
+
+    setTimeout(() => {
+      isSpinning = false;
+      spinBtn.disabled = false;
+      spinUserNameInput.disabled = false;
+
+      const userName = spinUserNameInput.value.trim();
+      const fakeCode = generateFakeRedeemCode();
+
+      wheelResult.innerHTML = `
+        <div style="font-size:18px; color:#ffd700; margin-bottom:4px;">🎉 JACKPOT! 👑</div>
+        <div>Congratulations <b>${userName}</b>! You won <b>Mega ₹799 Redeem Code</b>!</div>
+        <div style="margin-top:8px; padding:6px 14px; background:linear-gradient(135deg, #22c55e, #16a34a); color:#fff; border-radius:8px; font-family:monospace; font-size:15px; font-weight:800; letter-spacing:1px; box-shadow:0 0 15px rgba(34,197,94,0.6);">
+          ${fakeCode}
+        </div>
+      `;
+      wheelResult.style.color = "#22c55e";
+    }, 5600);
+  });
+</script>
+
+<!-- FAQ LOGIC & CANVAS BACKGROUND -->
 <script>
   function toggleFaq(element) {
     const answer = element.querySelector('.faq-answer');
@@ -1107,9 +1380,7 @@ footer a { color: #ff4a4a; text-decoration: none; font-weight: bold; }
   function animate() {
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, innerWidth, innerHeight);
-
     drawWaveEffect();
-
     for (let i = 0; i < particlesArray.length; i++) {
       particlesArray[i].update();
     }
