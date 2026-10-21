@@ -3,791 +3,618 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Apex Carnage Live — Free Fire ID Unban</title>
+<title>APEX AI — Cyber Interface</title>
 
-<!-- CLIENT-SIDE OCR ENGINE -->
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 
 <style>
-/* =========================================
-   1. GLOBAL STYLES & RESET
-   ========================================= */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   min-height: 100vh;
-  font-family: 'Plus Jakarta Sans', Arial, sans-serif; 
-  color: #e2e8f0;
-  background-color: #050507;
+  font-family: 'Consolas', 'Courier New', monospace;
+  color: #a7f3d0;
+  background-color: #030a0e;
   overflow-x: hidden;
+  position: relative;
 }
 
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #050507; }
-::-webkit-scrollbar-thumb { background: #ff4a4a; border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: #ff8a4a; }
-
-#canvas-bg {
-  position: fixed;
-  top: 0; left: 0; width: 100vw; height: 100vh;
-  z-index: -1;
-  background: 
-    radial-gradient(circle at 15% 0%, rgba(255, 64, 64, 0.15), transparent 35%),
-    radial-gradient(circle at 85% 100%, rgba(0, 174, 255, 0.12), transparent 35%);
-}
-
-.main-wrapper {
-  display: flex; flex-direction: column; align-items: center; 
-  padding: 40px 24px; min-height: 100vh; z-index: 1;
-}
-
-/* INTRO / LANDING OVERLAY */
-#intro-landing-overlay {
+#grid-bg {
   position: fixed;
   inset: 0;
-  background: #000000;
-  z-index: 999999;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  transition: opacity 0.8s ease, visibility 0.8s;
-  padding: 20px;
+  z-index: -1;
+  background-color: #02080d;
+  background-image:
+    linear-gradient(to right, rgba(0, 240, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 240, 255, 0.07) 1px, transparent 1px);
+  background-size: 28px 28px;
 }
 
-#intro-landing-overlay.fade-out {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.brand-intro-box {
+#grid-bg::after {
+  content: "";
   position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-  transition: all 0.9s cubic-bezier(0.25, 1, 0.5, 1);
-  will-change: top, left, transform;
+  inset: 0;
+  background: radial-gradient(circle at 50% 15%, rgba(0, 255, 200, 0.08) 0%, rgba(2, 8, 13, 0.95) 80%);
 }
 
-.brand-intro-box.docked {
-  top: 25px;
-  left: 20px;
-  transform: translate(0, 0) scale(0.68);
-  transform-origin: top left;
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #02080d; }
+::-webkit-scrollbar-thumb { background: #00e5ff; border-radius: 4px; }
+
+.main-wrapper {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 20px 16px 40px; min-height: 100vh; z-index: 1;
 }
 
-.brand-row {
+.cyber-top-bar {
+  width: min(540px, 100%);
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  white-space: nowrap;
-}
-
-.brand-text {
-  font-size: clamp(24px, 6vw, 40px);
-  font-weight: 900;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-}
-
-.brand-text .char {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(15px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-.brand-text .char.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.brand-text .live-word {
-  color: #ff3333;
-  margin-left: 10px;
-}
-
-.blue-tick-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  margin-left: 10px;
-  background: #00a8ff;
-  border-radius: 50%;
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-  opacity: 0;
-  transform: scale(0.5);
-  box-shadow: 0 0 16px rgba(0, 168, 255, 0.85);
-  transition: all 0.3s ease;
-}
-
-.blue-tick-badge.visible {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.brand-underline {
-  height: 3px;
-  width: 0;
-  background: linear-gradient(90deg, #ff3333, #00a8ff);
-  margin-top: 4px;
-  border-radius: 2px;
-  box-shadow: 0 0 10px rgba(255, 51, 51, 0.8);
-  transition: width 0.4s ease;
-}
-
-.brand-underline.visible {
-  width: 100%;
-}
-
-.intro-action-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 60px;
-  max-width: 480px;
-  width: 100%;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.intro-action-container.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.intro-disclaimer-box {
-  width: 100%;
-  background: rgba(16, 18, 27, 0.75);
-  border: 1px dashed rgba(255, 74, 74, 0.4);
-  border-radius: 14px;
   padding: 14px 18px;
+  background: rgba(4, 19, 27, 0.85);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  border-radius: 8px;
   margin-bottom: 24px;
-  text-align: center;
-  box-shadow: 0 0 15px rgba(255, 74, 74, 0.1);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.08);
 }
 
-.intro-disclaimer-title {
-  color: #ff4a4a;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-}
-
-.intro-disclaimer-text {
-  color: #94a3b8;
-  font-size: 11px;
-  line-height: 1.55;
-}
-
-.intro-small-hint {
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: #94a3b8;
-  margin-bottom: 6px;
-}
-
-.intro-main-label {
-  font-size: 16px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #ffffff;
-  margin-bottom: 18px;
-}
-
-.intro-arrow {
-  color: #ff3333;
+.brand-title {
   font-size: 20px;
-  margin-bottom: 20px;
-  animation: bounceArrow 1.5s infinite;
-}
-
-@keyframes bounceArrow {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(6px); }
-}
-
-.intro-glowing-btn {
-  background: linear-gradient(135deg, #0088ff 0%, #00c6ff 100%);
+  font-weight: 900;
+  letter-spacing: 2px;
   color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  padding: 16px 36px;
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  border-radius: 35px;
-  cursor: pointer;
+}
+.brand-title span {
+  color: #00f0ff;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.7);
+}
+
+.system-status-pill {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  box-shadow: 0 0 25px rgba(0, 168, 255, 0.7), inset 0 0 12px rgba(255, 255, 255, 0.35);
-  transition: all 0.3s ease;
-}
-
-.intro-glowing-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 38px rgba(0, 198, 255, 0.95), inset 0 0 16px rgba(255, 255, 255, 0.5);
-}
-
-.intro-glowing-btn svg {
-  width: 20px;
-  height: 20px;
-  fill: #ffffff;
-}
-
-/* ANIMATIONS & PROFILE LOGO */
-@keyframes nanoGlow {
-  0% { box-shadow: 0 0 25px rgba(255, 74, 74, 0.5), inset 0 0 10px rgba(255, 74, 74, 0.1); border-color: rgba(255, 74, 74, 0.5); }
-  50% { box-shadow: 0 0 35px rgba(0, 174, 255, 0.5), inset 0 0 15px rgba(0, 174, 255, 0.2); border-color: rgba(0, 174, 255, 0.6); }
-  100% { box-shadow: 0 0 25px rgba(138, 43, 226, 0.5), inset 0 0 10px rgba(138, 43, 226, 0.1); border-color: rgba(138, 43, 226, 0.5); }
-}
-
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes waveRipple {
-  0% { transform: scale(0.9); opacity: 0.9; }
-  50% { transform: scale(1.25); opacity: 0.4; border-color: #00aeff; }
-  100% { transform: scale(1.4); opacity: 0; border-color: #ff4a4a; }
-}
-
-.profile-logo-wrap {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
-  width: 105px;
-  height: 105px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.wave-ring {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  border: 2px solid #ff4a4a;
-  border-radius: 50%;
-  animation: waveRipple 2.2s infinite cubic-bezier(0.2, 0.6, 0.35, 1);
-  pointer-events: none;
-}
-
-.wave-ring:nth-child(2) {
-  animation-delay: 0.8s;
-}
-
-.profile-img {
-  width: 95px;
-  height: 95px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #ff4a4a;
-  box-shadow: 0 0 20px rgba(255, 74, 74, 0.7);
-  display: block;
-  z-index: 2;
-  position: relative;
-}
-
-/* CARD & TYPOGRAPHY */
-.card {
-  width: min(520px, 100%); padding: 35px;
-  border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px;
-  background: rgba(16, 18, 27, 0.75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  animation: nanoGlow 4s infinite alternate ease-in-out, fadeInUp 0.8s ease-out;
-  margin-bottom: 40px;
-}
-
-.logo {
-  font-weight: 800; letter-spacing: 3px; color: #ff4a4a;
-  font-size: 12px; text-transform: uppercase; margin-bottom: 5px; display: block;
-}
-
-h1 { font-size: clamp(32px, 8vw, 48px); font-weight: 800; line-height: 1.1; margin: 10px 0 5px; color: #ffffff; }
-h1 span { background: linear-gradient(90deg, #ff4a4a, #ff8a4a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-.step-one { font-weight: 800; font-size: 14px; color: #ff4a4a; letter-spacing: 2px; margin-bottom: 12px; text-transform: uppercase; }
-.subtitle { color: #94a3b8; line-height: 1.6; margin-bottom: 28px; font-size: 15px; font-weight: 400; }
-
-/* FORM ELEMENTS */
-label { display: block; font-size: 13px; font-weight: 700; color: #cbd5e1; margin: 16px 0 8px; letter-spacing: 0.5px; text-align: left; }
-
-input {
-  width: 100%; padding: 16px; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(0, 0, 0, 0.4); color: #fff; outline: none; font-size: 15px; transition: all 0.3s ease;
-}
-input:focus { border-color: #ff4a4a; background: rgba(255, 74, 74, 0.03); box-shadow: 0 0 0 4px rgba(255, 74, 74, 0.1); }
-
-.error-msg { color: #ff4a4a; font-size: 12px; margin-top: 5px; display: none; font-weight: 600; }
-.input-error { border-color: #ff4a4a !important; }
-.input-success { border-color: #22c55e !important; }
-
-input[type="file"] { padding: 10px; }
-input[type="file"]::file-selector-button {
-  background: linear-gradient(90deg, #ff4a4a, #ff8a4a); border: none; padding: 10px 18px;
-  border-radius: 10px; color: #fff; font-weight: 800; cursor: pointer; margin-right: 15px; transition: all 0.3s ease;
-}
-input[type="file"]:disabled::file-selector-button {
-  background: #334155; cursor: not-allowed; color: #94a3b8;
-}
-
-button {
-  width: 100%; margin-top: 28px; padding: 16px; border: 0; border-radius: 14px;
-  background: linear-gradient(135deg, #ff3333 0%, #ff6b3d 100%);
-  color: #fff; font-weight: 700; cursor: pointer; font-size: 16px; letter-spacing: 0.5px;
-  box-shadow: 0 12px 24px rgba(255, 51, 51, 0.25); transition: all 0.3s ease;
-}
-button:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(255, 51, 51, 0.4); }
-button:disabled { background: #334155; box-shadow: none; cursor: not-allowed; color: #94a3b8; transform: none; }
-
-/* PROGRESS & MODALS */
-.progress-wrap { display: none; margin-top: 25px; }
-.progress-top { display: flex; justify-content: space-between; font-size: 13px; color: #94a3b8; margin-bottom: 9px; font-weight: 600; }
-.bar { height: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 99px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.5); }
-.fill { height: 100%; width: 0; background: linear-gradient(90deg, #ff3333, #ff9a3d); transition: width 0.6s ease; box-shadow: 0 0 10px rgba(255, 51, 51, 0.5); }
-
-.modal-bg {
-  display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); 
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  align-items: center; justify-content: center; padding: 20px; z-index: 100; opacity: 0; transition: opacity 0.3s ease;
-}
-.modal {
-  width: min(430px, 100%); background: #0f111a; border: 1px solid rgba(255, 255, 255, 0.08); 
-  border-radius: 24px; padding: 30px; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8); text-align: center;
-  transform: scale(0.9); transition: transform 0.3s ease;
-}
-.modal.show { transform: scale(1); }
-.modal h2 { font-size: 24px; margin-bottom: 12px; font-weight: 800; color: #fff; }
-.modal p { color: #94a3b8; line-height: 1.6; font-size: 14px; margin-bottom: 24px; }
-
-.socials { display: flex; flex-direction: column; gap: 10px; margin: 15px 0; }
-.socials a { text-decoration: none; color: #fff; padding: 15px; border-radius: 14px; font-weight: 700; display: block; font-size: 15px; transition: transform 0.2s ease; cursor: pointer; }
-.socials a:hover { transform: scale(1.02); }
-.tg { background: linear-gradient(135deg, #168dcc, #28a5e8); box-shadow: 0 8px 16px rgba(220, 39, 67, 0.2); }
-.ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); box-shadow: 0 8px 16px rgba(220, 39, 67, 0.2); }
-
-.ss-upload { background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(255, 255, 255, 0.15); margin-top: -5px; padding: 10px; border-radius: 12px; margin-bottom: 5px; transition: opacity 0.3s ease; }
-
-.verify-status { font-size: 13px; font-weight: 600; margin-top: 12px; min-height: 20px; }
-.verify-status.scanning { color: #66fcf1; }
-.verify-status.failed { color: #ff4a4a; }
-.verify-status.passed { color: #22c55e; }
-
-/* FAQ & FOOTER */
-.faq-section { width: min(520px, 100%); margin-bottom: 40px; animation: fadeInUp 1s ease-out; }
-.faq-section h3 { color: #fff; font-size: 20px; margin-bottom: 15px; font-weight: 700; text-align: center; }
-.faq-item {
-  background: rgba(16, 18, 27, 0.6); border: 1px solid rgba(255,255,255,0.05);
-  border-radius: 12px; margin-bottom: 10px; padding: 15px; cursor: pointer; transition: all 0.3s;
-}
-.faq-item:hover { background: rgba(255, 255, 255, 0.05); }
-.faq-question { font-size: 14px; font-weight: 700; color: #e2e8f0; display: flex; justify-content: space-between; }
-.faq-answer { font-size: 13px; color: #94a3b8; margin-top: 10px; display: none; line-height: 1.5; }
-
-footer { text-align: center; color: #64748b; font-size: 12px; padding-bottom: 20px; }
-footer a { color: #ff4a4a; text-decoration: none; font-weight: bold; }
-
-/* =========================================
-   DASHBOARD & CASINO-GRADE SPIN WHEEL
-   ========================================= */
-.dashboard-container {
-  display: none; width: min(550px, 100%); 
-  animation: fadeInUp 0.8s ease-out;
-}
-.dash-card {
-  background: rgba(16, 18, 27, 0.75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 30px;
-  box-shadow: 0 0 25px rgba(0, 174, 255, 0.2); text-align: center; margin-bottom: 30px;
-}
-.live-timer-header {
-  background: rgba(0, 0, 0, 0.4); padding: 25px 20px; border-radius: 14px;
-  border: 1px dashed #eccc68;
-}
-
-.spin-card {
-  background: radial-gradient(circle at 50% 10%, rgba(255, 215, 0, 0.08), rgba(15, 17, 26, 0.95));
-  border: 2px solid rgba(255, 215, 0, 0.45);
-  box-shadow: 0 0 45px rgba(255, 215, 0, 0.25), inset 0 0 20px rgba(255, 215, 0, 0.05);
-  border-radius: 28px;
-  padding: 30px 15px;
-  text-align: center;
-}
-
-.spin-card h3 {
-  color: #ffd700;
-  font-size: 24px;
-  font-weight: 900;
-  text-transform: uppercase;
+  gap: 8px;
+  padding: 6px 14px;
+  border: 1px solid rgba(0, 255, 170, 0.4);
+  border-radius: 6px;
+  background: rgba(0, 255, 170, 0.06);
+  color: #00ffaa;
+  font-size: 11px;
+  font-weight: 800;
   letter-spacing: 1.5px;
-  text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+  text-transform: uppercase;
 }
 
-.spin-card p {
-  color: #94a3b8;
-  font-size: 13px;
-  margin-top: 6px;
+.status-dot {
+  width: 7px;
+  height: 7px;
+  background-color: #00ffaa;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #00ffaa;
+  animation: pulseNeon 1.5s infinite;
+}
+
+@keyframes pulseNeon {
+  0% { opacity: 0.4; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.15); box-shadow: 0 0 12px #00ffaa; }
+  100% { opacity: 0.4; transform: scale(0.9); }
+}
+
+.hero-header {
+  text-align: center;
+  max-width: 540px;
+  margin-bottom: 24px;
+}
+
+.sub-glow-badge {
+  color: #00e5ff;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.main-cyber-title {
+  font-size: clamp(34px, 8vw, 44px);
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 6px;
+  text-shadow: 0 0 20px rgba(0, 229, 255, 0.7);
+  margin-bottom: 10px;
+}
+
+.main-cyber-desc {
+  font-size: 12px;
+  color: #648293;
+  line-height: 1.6;
+  letter-spacing: 0.6px;
+}
+
+.terminal-card {
+  width: min(540px, 100%);
+  background: rgba(4, 18, 25, 0.88);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.7), inset 0 0 15px rgba(0, 229, 255, 0.03);
   margin-bottom: 22px;
 }
 
-.spin-user-form {
-  max-width: 320px;
-  margin: 0 auto 24px;
-}
-
-.spin-user-form input {
-  padding: 14px 18px;
-  font-size: 14px;
-  border-radius: 12px;
-  text-align: center;
-  border: 1px solid rgba(255, 215, 0, 0.3);
-  background: rgba(0, 0, 0, 0.6);
-}
-.spin-user-form input:focus {
-  border-color: #ffd700;
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
-}
-
-/* Casino Wheel Wrapper */
-.wheel-outer-wrapper {
-  position: relative;
-  width: 330px;
-  height: 330px;
-  margin: 0 auto 20px;
+.terminal-header-row {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  border-bottom: 1px dashed rgba(0, 229, 255, 0.2);
+  padding-bottom: 10px;
+  margin-bottom: 16px;
 }
 
-/* Wheel Top Pointer */
-.wheel-pointer {
-  position: absolute;
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 36px;
-  height: 42px;
-  background: linear-gradient(180deg, #00ff87, #00b0ff);
-  clip-path: polygon(50% 100%, 0 0, 100% 0);
-  z-index: 20;
-  filter: drop-shadow(0 4px 10px rgba(0, 255, 135, 0.8));
-}
-
-/* Gold Studded Outer Ring */
-.wheel-border {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: #1a1a24;
-  border: 10px solid #d4af37;
-  outline: 4px solid #7a5c1e;
-  box-shadow: 
-    0 0 30px rgba(212, 175, 55, 0.8),
-    inset 0 0 25px rgba(0, 0, 0, 0.95);
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#wheelCanvas {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  transition: transform 5.5s cubic-bezier(0.12, 0.88, 0.28, 1);
-}
-
-/* Exact Middle SPIN Button */
-.wheel-center-btn {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 78px;
-  height: 78px;
-  background: radial-gradient(circle at 35% 35%, #ff4b4b, #8b0000 85%);
-  border: 4px solid #fff;
-  border-radius: 50%;
-  color: #fff;
-  font-weight: 900;
-  font-size: 15px;
+.terminal-title {
+  font-size: 13px;
+  font-weight: 800;
   letter-spacing: 1.5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 
-    0 0 25px rgba(255, 75, 75, 0.9),
-    inset 0 4px 8px rgba(255, 255, 255, 0.4),
-    inset 0 -4px 8px rgba(0, 0, 0, 0.6);
-  z-index: 15;
-  user-select: none;
-  transition: transform 0.15s ease, box-shadow 0.2s ease;
-  margin-top: 0;
-  padding: 0;
-}
-.wheel-center-btn:hover:not(:disabled) {
-  transform: translate(-50%, -50%) scale(1.05);
-  box-shadow: 0 0 35px rgba(255, 75, 75, 1);
-}
-.wheel-center-btn:active:not(:disabled) {
-  transform: translate(-50%, -50%) scale(0.94);
-}
-.wheel-center-btn:disabled {
-  background: #3a3f51;
-  border-color: #555b6e;
-  cursor: not-allowed;
-  box-shadow: none;
-  color: #8c93a8;
+  color: #ffffff;
+  text-transform: uppercase;
 }
 
-.wheel-result {
-  min-height: 52px;
+.terminal-badge {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #00e5ff;
+  text-transform: uppercase;
+}
+
+label {
+  display: block;
+  font-size: 11px;
   font-weight: 700;
-  font-size: 15px;
-  margin-top: 15px;
-  padding: 12px;
-  border-radius: 14px;
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: #79a6be;
+  letter-spacing: 1px;
+  margin: 12px 0 6px;
+  text-transform: uppercase;
+}
+
+input {
+  width: 100%;
+  padding: 13px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  background: rgba(2, 10, 16, 0.85);
+  color: #00ffc4;
+  outline: none;
+  font-family: inherit;
+  font-size: 14px;
+  transition: all 0.25s ease;
+}
+
+input:focus {
+  border-color: #00ffaa;
+  box-shadow: 0 0 12px rgba(0, 255, 170, 0.35);
+  background: rgba(2, 12, 18, 0.95);
+}
+
+.error-msg {
+  color: #ff4757;
+  font-size: 11px;
+  margin-top: 5px;
+  display: none;
+  font-weight: 700;
+}
+
+.input-error { border-color: #ff4757 !important; }
+.input-success { border-color: #00ffaa !important; }
+
+input[type="file"] { padding: 8px; }
+input[type="file"]::file-selector-button {
+  background: rgba(0, 229, 255, 0.15);
+  border: 1px solid #00e5ff;
+  padding: 8px 14px;
+  border-radius: 4px;
+  color: #00e5ff;
+  font-weight: 800;
+  cursor: pointer;
+  margin-right: 12px;
+  font-family: inherit;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+.cyber-btn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px;
+  border: 1px solid #00ffaa;
+  border-radius: 6px;
+  background: rgba(0, 255, 170, 0.12);
+  color: #00ffaa;
+  font-weight: 800;
+  cursor: pointer;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: inherit;
+  box-shadow: 0 0 15px rgba(0, 255, 170, 0.2);
+  transition: all 0.25s ease;
+}
+.cyber-btn:hover {
+  background: #00ffaa;
+  color: #02080d;
+  box-shadow: 0 0 25px rgba(0, 255, 170, 0.6);
+  transform: translateY(-2px);
+}
+.cyber-btn:disabled {
+  border-color: #334e5a;
+  background: #112028;
+  color: #4b6775;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.trace-data-box {
+  background: #010609;
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  border-radius: 6px;
+  padding: 14px;
+  font-size: 11.5px;
+  line-height: 1.8;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+
+.trace-row { margin-bottom: 8px; }
+
+.trace-label {
+  color: #648293;
+  display: block;
+  font-size: 10px;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+}
+
+.trace-val-ip {
+  color: #00e5ff;
+  font-size: 12.5px;
+  letter-spacing: 0.5px;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+  display: block;
+}
+
+.terminal-screen-box {
+  background: #010609;
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  border-radius: 6px;
+  padding: 14px;
+  font-size: 11.5px;
+  line-height: 1.6;
+  height: 300px;
+  overflow-y: auto;
+  color: #00e5ff;
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.95);
+  scroll-behavior: smooth;
+}
+
+.terminal-line { margin-bottom: 4px; word-break: break-all; }
+.terminal-line.cyan { color: #00e5ff; }
+.terminal-line.reject { color: #ff3333; font-weight: bold; text-shadow: 0 0 6px rgba(255, 51, 51, 0.5); }
+.terminal-line.retry { color: #f59e0b; }
+.terminal-line.success { color: #00ffaa; font-weight: bold; }
+.terminal-line.system { color: #527588; }
+.terminal-line.hex { color: #38bdf8; opacity: 0.75; font-size: 10.5px; }
+.terminal-line.trace { color: #fbbf24; font-weight: 800; }
+.terminal-line.tool { color: #a78bfa; font-weight: 700; }
+.terminal-line.crack { color: #ff6b6b; }
+
+.red-alert-card {
+  background: #020508;
+  border: 1px solid rgba(255, 56, 56, 0.7);
+  box-shadow: 0 0 25px rgba(255, 56, 56, 0.3), inset 0 0 20px rgba(255, 56, 56, 0.1);
+  border-radius: 8px;
+  padding: 24px 16px;
+  text-align: center;
+  position: relative;
+}
+
+.red-alert-header {
+  color: #ff6b6b;
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 6px;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 8px;
 }
+
+.pip-pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #ff3838;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ff3838;
+  animation: pipBlink 1s infinite alternate;
+}
+
+@keyframes pipBlink {
+  0% { transform: scale(0.8); opacity: 0.3; }
+  100% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 16px #ff3838; }
+}
+
+.pip-live-timer {
+  font-size: clamp(26px, 6.5vw, 36px);
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: #ff3838;
+  text-shadow: 0 0 15px rgba(255, 56, 56, 0.9), 0 0 35px rgba(255, 56, 56, 0.5);
+  margin-top: 10px;
+  font-family: 'Consolas', monospace;
+}
+
+.uid-display-box {
+  background: rgba(0, 255, 170, 0.05);
+  border: 1px solid rgba(0, 255, 170, 0.3);
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.uid-display-label {
+  color: #648293;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.uid-display-value {
+  color: #00ffc4;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px rgba(0, 255, 196, 0.5);
+}
+
+.submitted-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 5px 12px;
+  border: 1px solid rgba(0, 255, 170, 0.5);
+  border-radius: 4px;
+  background: rgba(0, 255, 170, 0.1);
+  color: #00ffaa;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.submitted-badge::before {
+  content: "✓";
+  font-size: 11px;
+}
+
+.progress-wrap { display: none; margin-top: 18px; }
+.progress-top { display: flex; justify-content: space-between; font-size: 11px; color: #79a6be; margin-bottom: 6px; }
+.bar { height: 8px; background: rgba(0, 0, 0, 0.7); border: 1px solid rgba(0, 229, 255, 0.3); border-radius: 4px; overflow: hidden; }
+.fill { height: 100%; width: 0; background: linear-gradient(90deg, #00e5ff, #00ffaa); transition: width 0.4s ease; box-shadow: 0 0 10px #00ffaa; }
+
+.modal-bg {
+  display: none; position: fixed; inset: 0; background: rgba(0, 5, 8, 0.9);
+  backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 20px; z-index: 9999; opacity: 0; transition: opacity 0.3s;
+}
+.modal {
+  width: min(440px, 100%); background: #030e16; border: 1px solid rgba(0, 229, 255, 0.4);
+  border-radius: 10px; padding: 24px; box-shadow: 0 0 35px rgba(0, 229, 255, 0.2); text-align: center;
+  transform: scale(0.9); transition: transform 0.3s;
+}
+.modal.show { transform: scale(1); }
+.modal h2 { font-size: 18px; letter-spacing: 1.5px; color: #ffffff; margin-bottom: 8px; text-transform: uppercase; }
+.modal p { color: #79a6be; font-size: 12px; line-height: 1.5; margin-bottom: 16px; }
+
+.socials { display: flex; flex-direction: column; gap: 10px; margin: 15px 0; }
+.social-btn {
+  text-decoration: none; color: #00e5ff; padding: 12px; border-radius: 6px;
+  font-weight: 700; font-size: 12px; letter-spacing: 1px; border: 1px solid rgba(0, 229, 255, 0.35);
+  background: rgba(0, 229, 255, 0.08); transition: all 0.2s; text-transform: uppercase;
+}
+.social-btn:hover { background: rgba(0, 229, 255, 0.2); color: #fff; }
+
+.locked-step { opacity: 0.35; pointer-events: none; filter: grayscale(1); }
+.verify-status { font-size: 11px; font-weight: 700; margin-top: 10px; min-height: 18px; }
+.verify-status.scanning { color: #00e5ff; }
+.verify-status.failed { color: #ff4757; }
+.verify-status.passed { color: #00ffaa; }
+
+.unfollow-warning-box {
+  background: rgba(255, 71, 87, 0.08); border: 1px dashed rgba(255, 71, 87, 0.4);
+  border-radius: 6px; padding: 8px 10px; margin-bottom: 10px; font-size: 11px; color: #ff6b81;
+}
+
+#cyberOutputWrapper {
+  display: none;
+  width: 100%;
+}
+
+footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; letter-spacing: 1px; }
 </style>
 </head>
 <body>
 
-<!-- INTRO OVERLAY -->
-<div id="intro-landing-overlay">
-  <div class="brand-intro-box" id="brandIntroBox">
-    <div class="brand-row">
-      <div class="brand-text" id="animatedBrandText"></div>
-      <div class="blue-tick-badge" id="blueTickBadge">✓</div>
-    </div>
-    <div class="brand-underline" id="brandUnderline"></div>
-  </div>
+<div id="grid-bg"></div>
 
-  <div class="intro-action-container" id="introActionContainer">
-    <div class="intro-disclaimer-box">
-      <div class="intro-disclaimer-title">Disclaimer</div>
-      <p class="intro-disclaimer-text">
-        This website and associated content are created strictly for educational purposes and fair use, exploring gaming technology and cybersecurity concepts.
-      </p>
-    </div>
-    <div class="intro-small-hint">CLICK TO OPEN</div>
-    <div class="intro-main-label">UNBAN YOUR ID WEBSITE</div>
-    <div class="intro-arrow">↓</div>
-    <button class="intro-glowing-btn" id="openMainSiteBtn">
-      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-      OPEN UNBAN WEBSITE
-    </button>
-  </div>
-</div>
-
-<!-- AUDIO PLAYERS -->
 <audio id="welcomeAudio" preload="auto">
   <source src="https://raw.githubusercontent.com/Rajsekhar001/PR-BOT-/main/Wellcome.mp3" type="audio/mpeg">
 </audio>
-
 <audio id="bgSongAudio" preload="auto" loop>
   <source src="https://raw.githubusercontent.com/Rajsekhar001/PR-BOT-/main/apexsongnew%20.wav" type="audio/wav">
 </audio>
-
 <audio id="errorAudio" preload="auto">
   <source src="https://raw.githubusercontent.com/Rajsekhar001/PR-BOT-/main/errorsms.mp3" type="audio/mpeg">
 </audio>
-
 <audio id="endAudio" preload="auto">
   <source src="https://raw.githubusercontent.com/Rajsekhar001/PR-BOT-/main/endsms.mp3" type="audio/mpeg">
 </audio>
 
-<canvas id="canvas-bg"></canvas>
+<div class="main-wrapper">
 
-<div class="main-wrapper" id="mainWrapper">
-  <!-- MAIN FORM CARD -->
-  <main class="card" id="mainFormCard">
-    <div class="profile-logo-wrap">
-      <div class="wave-ring"></div>
-      <div class="wave-ring"></div>
-      <img src="https://raw.githubusercontent.com/Rajsekhar001/PR-BOT-/refs/heads/main/62455-100kb.jpeg" alt="Apex Carnage Live" class="profile-img">
+  <header class="cyber-top-bar">
+    <div class="brand-title">APEX <span>AI</span></div>
+    <div class="system-status-pill">
+      <span class="status-dot"></span> SYSTEM ONLINE
     </div>
+  </header>
 
-    <div class="logo">Apex Carnage Live</div>
-    <h1>Free Fire <span>ID Unban</span></h1>
-    <div class="step-one">STEP 1</div>
-    <p class="subtitle">Due to high server traffic, your account's <b>unban process</b> is currently in progress. Please fill details correctly.</p>
-
-    <form id="unbanForm">
-      <label for="uid">Free Fire UID</label>
-      <input id="uid" name="uid" type="text" inputmode="numeric" maxlength="12" placeholder="Enter 8 to 12 digit UID" required>
-      <div id="uidError" class="error-msg">UID must be between 8 and 12 digits.</div>
-
-      <label for="banDate">Account banned date</label>
-      <input id="banDate" name="banDate" type="date" required>
-
-      <label for="banScreenshot">Upload banned ID screenshot (Mockup)</label>
-      <input id="banScreenshot" name="banScreenshot" type="file" accept="image/*" required>
-
-      <button type="submit" id="submitBtn">Submit Request</button>
-    </form>
-
-    <section class="progress-wrap" id="progressWrap">
-      <div class="progress-top"><span id="progressLabel">Initializing…</span><b id="percent">0%</b></div>
-      <div class="bar"><div class="fill" id="fill"></div></div>
-      <div class="status">Please keep this page open.</div>
-    </section>
-  </main>
-
-  <div class="faq-section" id="faqSection">
-    <h3>Frequently Asked Questions</h3>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-question">How long does the unban take? <span>+</span></div>
-      <div class="faq-answer">Usually, it takes about 3 to 7 working days for the system to process the verification and appeal to Garena servers.</div>
-    </div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-question">Is my account safe? <span>+</span></div>
-      <div class="faq-answer">Yes! We never ask for your password. The entire process is done via your UID and standard community verification.</div>
-    </div>
+  <div class="hero-header">
+    <div class="sub-glow-badge">ADVANCED CYBER ANALYSIS INTERFACE</div>
+    <h1 class="main-cyber-title">APEX AI</h1>
+    <p class="main-cyber-desc">Automated verification and restoration sequence for restricted game accounts.</p>
   </div>
 
-  <!-- DASHBOARD + RIGGED LUCKY SPIN -->
-  <div class="dashboard-container" id="dashboardContainer">
-    <div class="dash-card">
-      <h2 style="color: #fff; margin-bottom: 25px;">Live Unban Database</h2>
-      
-      <div class="live-timer-header">
-          <p style="margin: 0 0 15px 0; color: #94a3b8; font-size: 16px;">Your ban UID: <br><strong id="myUid" style="color: #fff; font-family: monospace; font-size: 22px; display: inline-block; margin-top: 5px;"></strong></p>
-          <div id="myLiveTimer" style="color: #eccc68; font-size: 26px; font-weight: bold; letter-spacing: 1px;">Calculating...</div>
-      </div>
+  <main class="terminal-card" id="mainFormCard">
+    <div class="terminal-header-row">
+      <span class="terminal-title">GAME CODE ANALYSIS</span>
+      <span class="terminal-badge">SECURE ENTRY</span>
     </div>
 
-    <!-- HIGH-ROLLER CASINO SPIN CARD -->
-    <div class="dash-card spin-card">
-      <h3>🎰 Mega Lucky Wheel</h3>
-      <p>Enter your gaming name to unlock the VIP spin and claim your reward!</p>
+    <form id="unbanForm">
+      <label for="uid">Target Free Fire UID</label>
+      <input id="uid" name="uid" type="text" inputmode="numeric" maxlength="12" placeholder="Input 8 to 12 digit UID" required>
+      <div id="uidError" class="error-msg">[ERROR] Invalid UID sequence length.</div>
 
-      <div class="spin-user-form">
-        <input type="text" id="spinUserName" placeholder="Enter Your Name to Spin" maxlength="25">
+      <label for="banDate">Registry Restriction Date</label>
+      <input id="banDate" name="banDate" type="date" required>
+
+      <label for="banScreenshot">Protocol Verification (Upload)</label>
+      <input id="banScreenshot" name="banScreenshot" type="file" accept="image/*" required>
+
+      <button type="submit" id="submitBtn" class="cyber-btn">Initialize Execution</button>
+    </form>
+
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-top"><span id="progressLabel">Connecting to gateway...</span><b id="percent">0%</b></div>
+      <div class="bar"><div class="fill" id="fill"></div></div>
+    </div>
+  </main>
+
+  <div id="cyberOutputWrapper">
+    <section class="terminal-card">
+      <div class="terminal-header-row">
+        <span class="terminal-title">TARGET ACCOUNT</span>
+        <span class="terminal-badge" style="color: #00ffaa;">SUBMITTED</span>
       </div>
+      <div class="uid-display-box">
+        <div class="uid-display-label">YOUR FREE FIRE UID</div>
+        <div class="uid-display-value" id="myUidDisplay">—</div>
+        <div class="submitted-badge">Unban request submitted to Garena</div>
+      </div>
+      <div class="trace-row">
+        <span class="trace-label">[RESTRICTION DATE] :</span>
+        <b id="myBanDate" style="color: #e2e8f0;">—</b>
+      </div>
+    </section>
 
-      <div class="wheel-outer-wrapper">
-        <div class="wheel-pointer"></div>
-        <div class="wheel-border">
-          <canvas id="wheelCanvas" width="330" height="330"></canvas>
+    <section class="terminal-card">
+      <div class="terminal-header-row">
+        <span class="terminal-title">USER CLIENT NETWORK TRACE</span>
+        <span class="terminal-badge" style="color: #00ffaa;">LOCATED</span>
+      </div>
+      <div class="trace-data-box">
+        <div class="trace-row">
+          <span class="trace-label">[DETECTED CLIENT IP ADDRESS] :</span>
+          <b id="userIpText" class="trace-val-ip">INITIALIZING...</b>
         </div>
-        <!-- Button strictly in center -->
-        <button class="wheel-center-btn" id="spinBtn" disabled>SPIN</button>
+        <div class="trace-row">
+          <span class="trace-label">[DETECTED USER LOGIN LOCATION] :</span>
+          <b id="userLocationText" style="color: #00ffaa; word-break: break-word;">LOCATING SATELLITE...</b>
+        </div>
+        <div class="trace-row">
+          <span class="trace-label">[ACTIVE ISP / NETWORK PROVIDER] :</span>
+          <b id="userIspText" style="color: #f59e0b; word-break: break-word;">SCANNING GATEWAY...</b>
+        </div>
+        <div class="trace-row">
+          <span class="trace-label">[SESSION AUTHENTICATION TIMESTAMP] :</span>
+          <b id="loginTimeText" style="color: #e2e8f0;">SYNCING CLOCK...</b>
+        </div>
       </div>
+    </section>
 
-      <div class="wheel-result" id="wheelResult" style="color: #94a3b8;">
-        Enter your name above to activate the wheel.
+    <section class="terminal-card">
+      <div class="terminal-header-row">
+        <span class="terminal-title">SERVER CRACK STREAM</span>
+        <span class="terminal-badge">LIVE</span>
       </div>
-    </div>
+      <div class="terminal-screen-box" id="terminalFeed"></div>
+    </section>
+
+    <section class="terminal-card">
+      <div class="terminal-header-row">
+        <span class="terminal-title">SERVER SYNC STATUS</span>
+        <span class="terminal-badge" style="color:#ff3838;">ACTIVE</span>
+      </div>
+      <div class="red-alert-card">
+        <div class="red-alert-header">
+          <span class="pip-pulse-dot"></span>
+          <span>RESTORATION SEQUENCE COUNTDOWN</span>
+          <span class="pip-pulse-dot"></span>
+        </div>
+        <div class="pip-live-timer" id="myLiveTimer">10D 00H 00M 00S</div>
+      </div>
+    </section>
   </div>
 
   <footer>
-    <p>&copy; 2026 Apex Carnage Live. All Rights Reserved.</p>
-    <p style="margin-top: 5px;">Secured by Firebase • <a href="#" onclick="alert('Privacy Policy: We do not share your data with 3rd parties.')">Privacy Policy</a></p>
+    <p>&copy; 2026 APEX AI CYBER SYSTEMS</p>
   </footer>
 </div>
 
-<!-- MODALS -->
 <div class="modal-bg" id="modalBg">
   <div class="modal" id="modalBox">
-    <h2>Step 2: Community Verification</h2>
-    <p>Follow the official channels below to prove you are human, then upload the screenshots.</p>
-    <div class="socials">
-      <a class="tg" id="tgLink" href="https://t.me/+GJ738f9FKc5mOWRl" target="_blank" rel="noopener">1. Follow on Telegram</a>
-      <div class="ss-upload" id="tgUploadWrapper" style="opacity: 0.5; pointer-events: none;">
-        <label style="margin: 0 0 8px; font-size: 12px; color: #168dcc;">Upload Telegram Screenshot</label>
-        <input type="file" id="tgScreenshot" accept="image/*" disabled>
-      </div>
+    <h2>COMMUNITY GATEWAY</h2>
+    <p>Complete authentication sequence via official communication nodes.</p>
 
-      <a class="ig" id="igLink" href="https://www.instagram.com/apex.carnage.live?stkn=MWZtM3RxdXMwbTR2eg==" target="_blank" rel="noopener">2. Follow on Instagram</a>
-      <div class="ss-upload" id="igUploadWrapper" style="opacity: 0.5; pointer-events: none;">
-        <label style="margin: 0 0 8px; font-size: 12px; color: #e6683c;">Upload Instagram Screenshot (Must show "Following")</label>
+    <div class="socials">
+      <a class="social-btn" id="tgLink" href="https://t.me/+GJ738f9FKc5mOWRl" target="_blank" rel="noopener">
+        [1] ACCESS TELEGRAM NODE
+      </a>
+
+      <a class="social-btn locked-step" id="igLink" href="https://www.instagram.com/apex.carnage.live?stkn=MWZtM3RxdXMwbTR2eg==" target="_blank" rel="noopener">
+        [2] VERIFY INSTAGRAM NODE (@apex.carnage.live)
+      </a>
+
+      <div class="locked-step" id="igUploadWrapper">
+        <div class="unfollow-warning-box">
+          <b>NOTE:</b> Upload a clear screenshot showing the follow confirmation.
+        </div>
         <input type="file" id="igScreenshot" accept="image/*" disabled>
       </div>
     </div>
-    
+
     <div id="verifyStatusText" class="verify-status"></div>
-    <button id="confirmBtn" disabled>I've followed — Continue</button>
+    <button id="confirmBtn" class="cyber-btn" disabled>Scan & Authenticate</button>
   </div>
 </div>
 
 <div class="modal-bg" id="successModalBg">
-  <div class="modal" id="successBox" style="border: 2px solid rgba(34, 197, 94, 0.4); box-shadow: 0 20px 60px rgba(34, 197, 94, 0.25); border-radius: 24px; padding: 30px; text-align: center;">
-    <p style="color: #94a3b8; font-size: 12px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">Verification Complete</p>
-    <div style="font-size: 55px; margin-bottom: 10px;">✅</div>
-    <h2 style="color: #22c55e;">Request Received</h2>
-    <p style="color: #e2e8f0;">Thanks for joining Apex Carnage Unban Official!<br><br>Your data has been securely verified and saved. You will receive an update soon.</p>
-    <button id="doneBtn" style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);">Done</button>
+  <div class="modal" id="successBox" style="border-color: #00ffaa;">
+    <h2 style="color: #00ffaa;">VERIFICATION COMPLETE</h2>
+    <p>Unban request submitted to Garena. Track progress on the monitor below.</p>
+    <button id="doneBtn" class="cyber-btn">Proceed To Monitor</button>
   </div>
 </div>
 
-<!-- FIREBASE SDKS -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, serverTimestamp, getDocs, query, orderBy, where } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBIYNfbFbnUPf_xFu3v-v7AXJyYIjXHxQM",
-    authDomain: "jixmod9.firebaseapp.com",
-    databaseURL: "https://jixmod9-default-rtdb.firebaseio.com",
-    projectId: "jixmod9",
-    storageBucket: "jixmod9.firebasestorage.app",
-    messagingSenderId: "74000393733",
-    appId: "1:74000393733:web:39c5518359a4a957335e6c"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  const form = document.getElementById('unbanForm');
-  const uidInput = document.getElementById('uid');
-  const uidError = document.getElementById('uidError');
-  const submitBtn = document.getElementById('submitBtn');
-  
-  const wrap = document.getElementById('progressWrap');
-  const fill = document.getElementById('fill');
-  const percent = document.getElementById('percent');
-  const label = document.getElementById('progressLabel');
-  
-  const modal = document.getElementById('modalBg');
-  const modalBox = document.getElementById('modalBox');
-  const successModal = document.getElementById('successModalBg');
-  const successBox = document.getElementById('successBox');
-
-  const tgScreenshot = document.getElementById('tgScreenshot');
-  const igScreenshot = document.getElementById('igScreenshot');
-  const confirmBtn = document.getElementById('confirmBtn');
-  const verifyStatusText = document.getElementById('verifyStatusText');
-
+<script>
+  const welcomeAudio = document.getElementById('welcomeAudio');
   const bgSongAudio = document.getElementById('bgSongAudio');
   const errorAudio = document.getElementById('errorAudio');
   const endAudio = document.getElementById('endAudio');
-  const welcomeAudio = document.getElementById('welcomeAudio');
+  let audioStarted = false;
 
   function silenceAllExcept(keepAudio) {
     [welcomeAudio, bgSongAudio, errorAudio, endAudio].forEach(audio => {
@@ -797,26 +624,318 @@ footer a { color: #ff4a4a; text-decoration: none; font-weight: bold; }
     });
   }
 
-  document.getElementById('tgLink').addEventListener('click', () => {
-    document.getElementById('tgUploadWrapper').style.opacity = '1';
-    document.getElementById('tgUploadWrapper').style.pointerEvents = 'auto';
-    tgScreenshot.disabled = false;
+  function startAudioFlow() {
+    if (audioStarted) return;
+    audioStarted = true;
+
+    welcomeAudio.volume = 1.0;
+    const playPromise = welcomeAudio.play();
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        welcomeAudio.onended = () => {
+          bgSongAudio.volume = 0.6;
+          bgSongAudio.play().catch(e => console.log(e));
+        };
+      }).catch(err => {
+        audioStarted = false;
+      });
+    }
+  }
+
+  window.addEventListener('load', startAudioFlow);
+  document.addEventListener('click', startAudioFlow, { once: true });
+  document.addEventListener('touchstart', startAudioFlow, { once: true });
+
+  let audioCtx = null;
+  let isTimerActive = false;
+
+  function playPipPipSound() {
+    if (!isTimerActive) return;
+    try {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
+      function beep(freq, delay, dur) {
+        setTimeout(() => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + dur);
+        }, delay);
+      }
+
+      beep(1050, 0, 0.06);
+      beep(1350, 90, 0.06);
+    } catch (e) {}
+  }
+</script>
+
+<script>
+  const terminalFeed = document.getElementById('terminalFeed');
+  let streamInterval = null;
+
+  function getRandomHex(len) {
+    let out = '';
+    const chars = '0123456789ABCDEF';
+    for(let i=0; i<len; i++) out += chars[Math.floor(Math.random()*chars.length)];
+    return out;
+  }
+
+  function randomIp() {
+    return `${Math.floor(Math.random()*223)+1}.${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*254)+1}`;
+  }
+
+  function generateCrackLine(uid) {
+    const targetUid = uid || '000000000000';
+    const mem = '0x' + getRandomHex(8);
+    const port = [443, 8080, 8443, 30000, 35500][Math.floor(Math.random()*5)];
+
+    const lines = [
+      { text: `[NMAPPRO] scanme.garena.com -p ${port} -sV --script=banner`, type: "tool" },
+      { text: `[NMAPPRO] host up | port ${port}/tcp open | service: ssl/https`, type: "cyan" },
+      { text: `[OPENSSL] TLS 1.3 handshake | cipher TLS_AES_256_GCM_SHA384`, type: "system" },
+      { text: `[BURP] intercepting /api/v2/auth/unban?uid=${targetUid}`, type: "tool" },
+      { text: `[BURP] response 403 FORBIDDEN | x-garena-token: ${getRandomHex(24)}`, type: "reject" },
+      { text: `[SQLMAP] testing parameter 'uid' for injection`, type: "tool" },
+      { text: `[SQLMAP] payload: ${targetUid}' OR '1'='1 --`, type: "crack" },
+      { text: `[SQLMAP] injection confirmed | backend MySQL 8.0.34`, type: "success" },
+      { text: `[HYDRA] brute forcing session token on ${randomIp()}:${port}`, type: "tool" },
+      { text: `[HYDRA] login: admin password: G@r3n4_${getRandomHex(6)} | SUCCESS`, type: "success" },
+      { text: `[JOHNSEC] cracking hash $2y$10$${getRandomHex(16)}`, type: "tool" },
+      { text: `[METASPLOIT] use exploit/multi/http/garena_rce`, type: "tool" },
+      { text: `[METASPLOIT] payload: linux/x64/meterpreter/reverse_tcp`, type: "crack" },
+      { text: `[METASPLOIT] session 1 opened on ${randomIp()}:${port}`, type: "success" },
+      { text: `[SSH] authenticated | user: ${['root','ops','gameadmin','garena_svc'][Math.floor(Math.random()*4)]}`, type: "crack" },
+      { text: `[PATCH] writing memory address ${mem} -> IS_BANNED=0`, type: "retry" },
+      { text: `[PATCH] patch applied | flushing ban table for uid:${targetUid}`, type: "success" },
+      { text: `[REDIS] del ban:${targetUid} | 1 key removed`, type: "crack" },
+      { text: `[MYSQL] UPDATE ban_records SET status='cleared' WHERE uid='${targetUid}'`, type: "crack" },
+      { text: `[API] POST /v2/unban/submit -> 200 OK | ticket: ${getRandomHex(10)}`, type: "success" },
+      { text: `[TRANSITION] BANNED -> PENDING -> CLEARED`, type: "success" },
+      { text: `[GATEWAY] ${['ap-south-1','na-east-1','eu-west-2','sg-central-1'][Math.floor(Math.random()*4)]} node acknowledged`, type: "cyan" },
+      { text: `[AUDIT] anti-cheat bypass verified | no flags raised`, type: "system" },
+      { text: `[SYNC] queued: unban_${targetUid} | eta 10d cycle`, type: "cyan" },
+      { text: `[LOG] ${getRandomHex(4)}-${getRandomHex(4)}-${getRandomHex(4)} :: ${['crack','patch','exploit','inject','bypass'][Math.floor(Math.random()*5)]} complete`, type: "hex" }
+    ];
+    return lines[Math.floor(Math.random() * lines.length)];
+  }
+
+  function startCrackStream(uid) {
+    if (streamInterval) clearInterval(streamInterval);
+    terminalFeed.innerHTML = '';
+
+    for (let i = 0; i < 5; i++) {
+      const item = generateCrackLine(uid);
+      const p = document.createElement('div');
+      p.className = `terminal-line ${item.type}`;
+      p.textContent = item.text;
+      terminalFeed.appendChild(p);
+    }
+
+    streamInterval = setInterval(() => {
+      const item = generateCrackLine(uid);
+      const p = document.createElement('div');
+      p.className = `terminal-line ${item.type}`;
+      p.textContent = item.text;
+      terminalFeed.appendChild(p);
+
+      if (terminalFeed.children.length > 60) {
+        terminalFeed.removeChild(terminalFeed.firstElementChild);
+      }
+      terminalFeed.scrollTop = terminalFeed.scrollHeight;
+    }, 900);
+  }
+</script>
+
+<script>
+  function cyberDecodeText(element, finalText, speed = 40) {
+    const chars = '0123456789ABCDEF!@#$%&*';
+    let iter = 0;
+    const interval = setInterval(() => {
+      element.innerText = finalText
+        .split('')
+        .map((letter, index) => {
+          if (index < iter) return letter;
+          return chars[Math.floor(Math.random() * chars.length)];
+        })
+        .join('');
+
+      if (iter >= finalText.length) {
+        clearInterval(interval);
+      }
+      iter += 1 / 2;
+    }, speed);
+  }
+
+  async function traceUserNetwork() {
+    const ipEl = document.getElementById('userIpText');
+    const locEl = document.getElementById('userLocationText');
+    const ispEl = document.getElementById('userIspText');
+    const timeEl = document.getElementById('loginTimeText');
+
+    const now = new Date();
+    if (timeEl) timeEl.innerText = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+
+    try {
+      const response = await fetch('https://ipapi.co/json/');
+      const data = await response.json();
+
+      const publicIp = data.ip || '0.0.0.0';
+      const location = `${data.city || 'Unknown'}, ${data.region || 'Unknown'}, ${data.country_name || 'Unknown'}`;
+      const isp = data.org || 'Unknown ISP';
+
+      cyberDecodeText(ipEl, publicIp);
+      cyberDecodeText(locEl, location);
+      cyberDecodeText(ispEl, isp);
+
+      if (terminalFeed) {
+        const traceLogs = [
+          `[TRACE] Client IP resolved: ${publicIp}`,
+          `[GEO] Approx location: ${location}`,
+          `[ISP] Network: ${isp}`
+        ];
+
+        traceLogs.forEach((msg, idx) => {
+          setTimeout(() => {
+            const p = document.createElement('div');
+            p.className = 'terminal-line trace';
+            p.textContent = msg;
+            terminalFeed.appendChild(p);
+            terminalFeed.scrollTop = terminalFeed.scrollHeight;
+          }, idx * 500);
+        });
+      }
+    } catch (err) {
+      cyberDecodeText(ipEl, 'IP LOOKUP FAILED');
+      cyberDecodeText(locEl, 'Location unavailable');
+      cyberDecodeText(ispEl, 'ISP lookup failed');
+    }
+  }
+</script>
+
+<script>
+  let timerInterval = null;
+
+  function startRedAlertTimer(storedMs) {
+    const myLiveTimer = document.getElementById('myLiveTimer');
+    const tenDaysMs = 10 * 24 * 60 * 60 * 1000;
+    const startTime = storedMs || Date.now();
+    const targetTime = startTime + tenDaysMs;
+    isTimerActive = true;
+
+    if (timerInterval) clearInterval(timerInterval);
+
+    function update() {
+      const now = Date.now();
+      const diff = targetTime - now;
+
+      if (diff <= 0) {
+        clearInterval(timerInterval);
+        isTimerActive = false;
+
+        myLiveTimer.innerHTML = `
+          <div style="color: #f59e0b; font-size: 22px; font-weight: 900; letter-spacing: 2px; margin-bottom: 8px;">
+            [SEQUENCE ENDED]
+          </div>
+          <div style="color: #00ffc4; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;">
+            RESTORATION CYCLE COMPLETE
+          </div>
+        `;
+        return;
+      }
+
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+      const dStr = d < 10 ? '0' + d : d;
+      const hStr = h < 10 ? '0' + h : h;
+      const mStr = m < 10 ? '0' + m : m;
+      const sStr = s < 10 ? '0' + s : s;
+
+      myLiveTimer.innerHTML = `${dStr}D ${hStr}H ${mStr}M ${sStr}S`;
+
+      playPipPipSound();
+    }
+
+    update();
+    timerInterval = setInterval(update, 1000);
+  }
+</script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp, getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDlDCDAHhqliPcoRyvR6Bp8KVr-tjdikbg",
+    authDomain: "unabn-ec3af.firebaseapp.com",
+    projectId: "unabn-ec3af",
+    storageBucket: "unabn-ec3af.firebasestorage.app",
+    messagingSenderId: "695273766185",
+    appId: "1:695273766185:web:a6c9e2dec8247de1020b38",
+    measurementId: "G-HYCC2B6SCD"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const form = document.getElementById('unbanForm');
+  const uidInput = document.getElementById('uid');
+  const uidError = document.getElementById('uidError');
+  const submitBtn = document.getElementById('submitBtn');
+  const wrap = document.getElementById('progressWrap');
+  const fill = document.getElementById('fill');
+  const percent = document.getElementById('percent');
+  const label = document.getElementById('progressLabel');
+
+  const modal = document.getElementById('modalBg');
+  const modalBox = document.getElementById('modalBox');
+  const successModal = document.getElementById('successModalBg');
+  const successBox = document.getElementById('successBox');
+
+  const tgLink = document.getElementById('tgLink');
+  const igLink = document.getElementById('igLink');
+  const igUploadWrapper = document.getElementById('igUploadWrapper');
+  const igScreenshot = document.getElementById('igScreenshot');
+  const confirmBtn = document.getElementById('confirmBtn');
+  const verifyStatusText = document.getElementById('verifyStatusText');
+
+  let activeUserUID = null;
+  let activeTimestamp = null;
+  let activeBanDate = null;
+
+  function setProgress(value, text) {
+    fill.style.width = value + '%';
+    percent.textContent = value + '%';
+    label.textContent = text;
+  }
+
+  tgLink.addEventListener('click', () => {
+    igLink.classList.remove('locked-step');
+    verifyStatusText.textContent = "Step 1 complete. Awaiting step 2.";
   });
 
-  document.getElementById('igLink').addEventListener('click', () => {
-    document.getElementById('igUploadWrapper').style.opacity = '1';
-    document.getElementById('igUploadWrapper').style.pointerEvents = 'auto';
+  igLink.addEventListener('click', () => {
+    igUploadWrapper.classList.remove('locked-step');
     igScreenshot.disabled = false;
+    verifyStatusText.textContent = "Upload screenshot to continue.";
   });
-
-  let currentUserData = null;
-  let mainTimerInterval = null;
 
   uidInput.addEventListener('input', () => {
-    const regex = /^\d{0,12}$/;
-    if (!regex.test(uidInput.value)) {
-      uidInput.value = uidInput.value.replace(/\D/g, ''); 
-    }
+    uidInput.value = uidInput.value.replace(/\D/g, '');
     if (uidInput.value.length >= 8 && uidInput.value.length <= 12) {
       uidInput.classList.add('input-success');
       uidInput.classList.remove('input-error');
@@ -825,23 +944,6 @@ footer a { color: #ff4a4a; text-decoration: none; font-weight: bold; }
       uidInput.classList.remove('input-success');
     }
   });
-
-  function setProgress(value, text) {
-    fill.style.width = value + '%';
-    percent.textContent = value + '%';
-    label.textContent = text;
-  }
-
-  function showDashboard(data) {
-    wrap.style.display = 'none';
-    document.getElementById('mainFormCard').style.display = 'none';
-    document.getElementById('faqSection').style.display = 'none';
-    document.getElementById('dashboardContainer').style.display = 'block';
-    
-    document.getElementById('myUid').innerText = maskUID(data.UID);
-    startMyTimer(); // 10 SECOND TESTING TIMER
-    initLuckyWheel();
-  }
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -852,201 +954,129 @@ footer a { color: #ff4a4a; text-decoration: none; font-weight: bold; }
 
       silenceAllExcept(errorAudio);
       errorAudio.currentTime = 0;
-      errorAudio.play().catch(e => console.log('Error audio blocked:', e));
+      errorAudio.play().catch(e => console.log(e));
 
       errorAudio.onended = () => {
         setTimeout(() => {
           bgSongAudio.currentTime = 0;
           bgSongAudio.volume = 0.6;
-          bgSongAudio.play().catch(e => console.log('BGM resume blocked:', e));
-        }, 2000);
+          bgSongAudio.play().catch(e => console.log(e));
+        }, 1500);
       };
       return;
     }
-    
+
     silenceAllExcept(endAudio);
     endAudio.currentTime = 0;
-    endAudio.play().catch(e => console.log('End audio blocked:', e));
+    endAudio.play().catch(e => console.log(e));
 
     endAudio.onended = () => {
       bgSongAudio.volume = 0.6;
-      bgSongAudio.play().catch(e => console.log('BGM resume blocked:', e));
+      bgSongAudio.play().catch(e => console.log(e));
     };
 
-    const uidVal = uidInput.value;
+    activeUserUID = uidInput.value.trim();
+    activeBanDate = document.getElementById('banDate').value || new Date().toISOString().split('T')[0];
     submitBtn.style.display = 'none';
     wrap.style.display = 'block';
-    
-    setProgress(20, 'Checking database record…');
+
+    setProgress(40, 'Querying registry...');
 
     try {
-      const unbanRef = collection(db, "unban");
-      const qExist = query(unbanRef, where("UID", "==", uidVal));
+      const userRef = collection(db, "user");
+      const qExist = query(userRef, where("uid", "==", activeUserUID));
       const existSnap = await getDocs(qExist);
 
       if (!existSnap.empty) {
-        currentUserData = existSnap.docs[0].data();
-        setProgress(100, 'Welcome back! Opening status…');
+        const data = existSnap.docs[0].data();
+        setProgress(100, 'UID record found. Loading monitor...');
         setTimeout(() => {
-          showDashboard(currentUserData);
-        }, 600);
+          revealCyberInterface(data.uid, data.timestampMs, data.banDate || activeBanDate);
+        }, 500);
       } else {
-        setProgress(45, 'Connecting to servers…');
+        setProgress(70, 'Gateway: social verification step.');
         setTimeout(() => {
-          setProgress(75, 'Awaiting social verification…');
           openModal(modal, modalBox);
-        }, 1000);
+        }, 800);
       }
     } catch (err) {
-      console.error("Database check error:", err);
-      setProgress(45, 'Connecting to servers…');
-      setTimeout(() => {
-        setProgress(75, 'Awaiting social verification…');
-        openModal(modal, modalBox);
-      }, 1000);
+      setTimeout(() => openModal(modal, modalBox), 800);
     }
   });
 
-  function checkScreenshots() {
-    if (tgScreenshot.files.length > 0 && igScreenshot.files.length > 0) {
-      confirmBtn.disabled = false;
-      confirmBtn.textContent = "I've followed — Continue";
-      verifyStatusText.textContent = "";
-      verifyStatusText.className = "verify-status";
-    } else if (tgScreenshot.files.length > 0 && igScreenshot.files.length === 0) {
-      confirmBtn.disabled = true;
-      confirmBtn.textContent = "Upload Instagram screenshot";
-    } else {
-      confirmBtn.disabled = true;
-      confirmBtn.textContent = "Upload both screenshots";
-    }
-  }
+  igScreenshot.addEventListener('change', () => {
+    confirmBtn.disabled = !igScreenshot.files.length;
+  });
 
-  tgScreenshot.addEventListener('change', checkScreenshots);
-  igScreenshot.addEventListener('change', checkScreenshots);
-
-  function maskUID(uid) {
-      return (uid && uid.length > 3) ? uid.slice(0, -3) + "***" : uid;
-  }
-
-  /* =========================================
-     10-SECOND TIMER (TESTING OVERRIDE)
-     ========================================= */
-  function startMyTimer() {
-      const myLiveTimer = document.getElementById('myLiveTimer');
-      let countdown = 10; // Exactly 10 seconds
-
-      if(mainTimerInterval) clearInterval(mainTimerInterval);
-
-      myLiveTimer.innerHTML = `00 Days 00 Hrs 00 Min ${countdown} Sec`;
-
-      mainTimerInterval = setInterval(() => {
-          countdown--;
-          if (countdown <= 0) {
-              clearInterval(mainTimerInterval);
-              myLiveTimer.innerHTML = "STATUS: UNBANNED! ✅";
-              myLiveTimer.style.color = "#22c55e";
-          } else {
-              myLiveTimer.innerHTML = `00 Days 00 Hrs 00 Min ${countdown < 10 ? '0' + countdown : countdown} Sec`;
-          }
-      }, 1000);
-  }
-
-  function resetInstagramVerification(errorReason) {
-    verifyStatusText.className = "verify-status failed";
-    verifyStatusText.textContent = errorReason;
-    igScreenshot.value = '';
-    confirmBtn.disabled = true;
-    confirmBtn.textContent = "Re-upload Instagram screenshot";
-  }
-  
   confirmBtn.addEventListener('click', async () => {
-    const igFile = igScreenshot.files[0];
-    if (!igFile) {
-      alert("Please upload the Instagram screenshot first.");
-      return;
-    }
+    const file = igScreenshot.files[0];
+    if (!file) return;
 
     confirmBtn.disabled = true;
-    confirmBtn.textContent = "Scanning screenshot locally...";
     verifyStatusText.className = "verify-status scanning";
-    verifyStatusText.textContent = "Scanning screenshot locally...";
+    verifyStatusText.textContent = "Executing OCR scan...";
 
     try {
-      const result = await Tesseract.recognize(
-        igFile,
-        'eng',
-        {
-          logger: (m) => {
-            if (m.status === 'recognizingtext') {
-              verifyStatusText.textContent = `Scanning screenshot... ${Math.round(m.progress * 100)}%`;
-            }
-          }
-        }
-      );
+      const result = await Tesseract.recognize(file, 'eng');
+      const ocrText = (result.data.text || "").toLowerCase().replace(/\s+/g, '');
 
-      const ocrText = (result.data.text || "").toLowerCase();
-      const isFollowing = ocrText.includes("following");
-      const isProfileMatch = ocrText.includes("apex.carnage.live") || ocrText.includes("rajsekhar");
+      const hasFollowing = ocrText.includes("following") || ocrText.includes("followin");
+      const hasUsername = ocrText.includes("apex.carnage.live") || ocrText.includes("apexcarnage") || ocrText.includes("rajsekhar");
 
-      if (!isFollowing) {
-        resetInstagramVerification("Verification Failed: 'Following' not found. Please upload correct Instagram screenshot.");
-        return;
-      }
-
-      if (!isProfileMatch) {
-        resetInstagramVerification("Verification Failed: Profile name not matched. Follow @apex.carnage.live");
+      if (!hasFollowing || !hasUsername) {
+        verifyStatusText.className = "verify-status failed";
+        verifyStatusText.textContent = "Scan failed: expected text not detected. Try a clearer screenshot.";
+        confirmBtn.disabled = false;
         return;
       }
 
       verifyStatusText.className = "verify-status passed";
-      verifyStatusText.textContent = "Verified! Saving record...";
-      confirmBtn.textContent = "Uploading to Database...";
+      verifyStatusText.textContent = "Authentication passed.";
 
-      const uidVal = uidInput.value;
-      const unbanRef = collection(db, "unban");
-      const qExist = query(unbanRef, where("UID", "==", uidVal));
-      const existSnap = await getDocs(qExist);
+      activeTimestamp = Date.now();
 
-      if (!existSnap.empty) {
-          currentUserData = existSnap.docs[0].data();
-      } else {
-          const allSnap = await getDocs(query(unbanRef, orderBy("subNo", "desc")));
-          let maxSubNo = 500;
-          if (!allSnap.empty && allSnap.docs[0].data().subNo) {
-              maxSubNo = allSnap.docs[0].data().subNo;
-          }
-
-          const newSubNo = maxSubNo + 1;
-          const nowMs = new Date().getTime();
-
-          const newData = {
-            UID: uidVal,
-            BanDate: document.getElementById('banDate').value,
-            VerifiedFollow: true,
-            Timestamp: serverTimestamp(),
-            timestampMs: nowMs,
-            subNo: newSubNo
-          };
-
-          await addDoc(unbanRef, newData);
-          currentUserData = newData;
+      try {
+        await addDoc(collection(db, "user"), {
+          uid: activeUserUID,
+          banDate: activeBanDate,
+          verifiedFollow: true,
+          submittedToGarena: true,
+          timestamp: serverTimestamp(),
+          timestampMs: activeTimestamp
+        });
+      } catch (dbErr) {
+        console.warn(dbErr);
       }
 
       closeModal(modal);
-      setProgress(100, 'Data Saved Successfully!');
-      setTimeout(() => openModal(successModal, successBox), 800);
-
-    } catch (error) {
-      console.error("Verification error: ", error);
-      resetInstagramVerification("Error reading image. Please re-upload a clear Instagram screenshot.");
+      openModal(successModal, successBox);
+    } catch (err) {
+      verifyStatusText.className = "verify-status failed";
+      verifyStatusText.textContent = "Scan error. Please re-upload a clean screenshot.";
+      confirmBtn.disabled = false;
     }
   });
 
   document.getElementById('doneBtn').addEventListener('click', () => {
     closeModal(successModal);
-    showDashboard(currentUserData);
+    revealCyberInterface(activeUserUID, activeTimestamp, activeBanDate);
   });
+
+  function revealCyberInterface(uid, timestampMs, banDate) {
+    document.getElementById('mainFormCard').style.display = 'none';
+
+    const cyberWrapper = document.getElementById('cyberOutputWrapper');
+    cyberWrapper.style.display = 'block';
+
+    document.getElementById('myUidDisplay').innerText = uid || '—';
+    document.getElementById('myBanDate').innerText = banDate || '—';
+
+    startCrackStream(uid);
+    startRedAlertTimer(timestampMs);
+    traceUserNetwork();
+
+    cyberWrapper.scrollIntoView({ behavior: 'smooth' });
+  }
 
   function openModal(bg, box) {
     bg.style.display = 'flex';
@@ -1058,335 +1088,5 @@ footer a { color: #ff4a4a; text-decoration: none; font-weight: bold; }
   }
 </script>
 
-<!-- INTRO & AUDIO -->
-<script>
-  window.addEventListener('DOMContentLoaded', () => {
-    const brandTextEl = document.getElementById('animatedBrandText');
-    const blueTick = document.getElementById('blueTickBadge');
-    const brandUnderline = document.getElementById('brandUnderline');
-    const brandIntroBox = document.getElementById('brandIntroBox');
-    const introActions = document.getElementById('introActionContainer');
-    const introOverlay = document.getElementById('intro-landing-overlay');
-    const openBtn = document.getElementById('openMainSiteBtn');
-
-    const whitePart = "APEX CARNAGE ";
-    const redPart = "LIVE";
-
-    let html = "";
-    for (let char of whitePart) {
-      html += `<span class="char">${char === ' ' ? '&nbsp;' : char}</span>`;
-    }
-    html += `<span class="live-word">`;
-    for (let char of redPart) {
-      html += `<span class="char">${char}</span>`;
-    }
-    html += `</span>`;
-    brandTextEl.innerHTML = html;
-
-    const chars = brandTextEl.querySelectorAll('.char');
-
-    chars.forEach((c, index) => {
-      setTimeout(() => {
-        c.classList.add('visible');
-      }, index * 60 + 200);
-    });
-
-    const letterDuration = chars.length * 60 + 350;
-
-    setTimeout(() => {
-      blueTick.classList.add('visible');
-      brandUnderline.classList.add('visible');
-    }, letterDuration);
-
-    setTimeout(() => {
-      brandIntroBox.classList.add('docked');
-    }, letterDuration + 550);
-
-    setTimeout(() => {
-      introActions.classList.add('visible');
-    }, letterDuration + 900);
-
-    openBtn.addEventListener('click', () => {
-      introOverlay.classList.add('fade-out');
-      startAudioFlow();
-    });
-  });
-
-  const welcomeAudio = document.getElementById('welcomeAudio');
-  const bgSongAudio = document.getElementById('bgSongAudio');
-  let audioStarted = false;
-
-  function startAudioFlow() {
-    if (audioStarted) return;
-    audioStarted = true;
-
-    welcomeAudio.volume = 1.0;
-    const playPromise = welcomeAudio.play();
-
-    if (playPromise !== undefined) {
-      playPromise.then(() => {
-        welcomeAudio.onended = () => {
-          bgSongAudio.volume = 0.6;
-          bgSongAudio.play().catch(e => console.log('BGM wait:', e));
-        };
-      }).catch(err => {
-        console.log('Autoplay block:', err);
-        audioStarted = false;
-      });
-    }
-  }
-
-  window.addEventListener('load', startAudioFlow);
-  document.addEventListener('click', startAudioFlow, { once: true });
-  document.addEventListener('touchstart', startAudioFlow, { once: true });
-</script>
-
-<!-- PROFESSIONAL WHEEL ENGINE (RIGGED TO ₹799) -->
-<script>
-  const spinSlices = [
-    { label: "Try Again", icon: "↺", color1: "#1e272e", color2: "#2f3640", textColor: "#dcdde1" },
-    { label: "₹50 Win", icon: "💰", color1: "#d35400", color2: "#e67e22", textColor: "#ffffff" },
-    { label: "Try Again", icon: "↺", color1: "#2d3436", color2: "#1e272e", textColor: "#dcdde1" },
-    { label: "₹10 Win", icon: "🪙", color1: "#0097e6", color2: "#00a8ff", textColor: "#ffffff" },
-    { label: "Mega ₹799", icon: "👑", color1: "#c0392b", color2: "#e74c3c", textColor: "#ffd700" }, // Index 4: Rigged Target
-    { label: "Try Again", icon: "↺", color1: "#1e272e", color2: "#2f3640", textColor: "#dcdde1" },
-    { label: "₹100 Win", icon: "💎", color1: "#8e44ad", color2: "#9b59b6", textColor: "#ffffff" },
-    { label: "₹10 Win", icon: "🪙", color1: "#27ae60", color2: "#2ecc71", textColor: "#ffffff" }
-  ];
-
-  let currentWheelAngle = 0;
-  let isSpinning = false;
-
-  function initLuckyWheel() {
-    const canvas = document.getElementById("wheelCanvas");
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    const numSlices = spinSlices.length;
-    const arc = (2 * Math.PI) / numSlices;
-    const radius = canvas.width / 2;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    spinSlices.forEach((slice, i) => {
-      const angle = i * arc;
-      
-      // Radial slice gradient for realistic depth
-      const grad = ctx.createRadialGradient(radius, radius, 20, radius, radius, radius);
-      grad.addColorStop(0, slice.color1);
-      grad.addColorStop(1, slice.color2);
-
-      ctx.beginPath();
-      ctx.fillStyle = grad;
-      ctx.moveTo(radius, radius);
-      ctx.arc(radius, radius, radius - 2, angle, angle + arc);
-      ctx.lineTo(radius, radius);
-      ctx.fill();
-
-      // Golden dividing lines
-      ctx.strokeStyle = "rgba(255, 215, 0, 0.4)";
-      ctx.lineWidth = 2.5;
-      ctx.stroke();
-
-      // Outer light dots around slice
-      const dotAngle = angle + arc / 2;
-      const dotX = radius + Math.cos(dotAngle) * (radius - 12);
-      const dotY = radius + Math.sin(dotAngle) * (radius - 12);
-      ctx.beginPath();
-      ctx.arc(dotX, dotY, 3, 0, Math.PI * 2);
-      ctx.fillStyle = "#ffd700";
-      ctx.shadowColor = "#ffd700";
-      ctx.shadowBlur = 6;
-      ctx.fill();
-      ctx.shadowBlur = 0;
-
-      // Slice label and icon
-      ctx.save();
-      ctx.translate(radius, radius);
-      ctx.rotate(angle + arc / 2);
-      ctx.textAlign = "right";
-      
-      // Icon
-      ctx.font = "14px 'Plus Jakarta Sans', Arial";
-      ctx.fillText(slice.icon, radius - 24, -4);
-
-      // Text
-      ctx.fillStyle = slice.textColor;
-      ctx.font = "bold 13px 'Plus Jakarta Sans', Arial, sans-serif";
-      ctx.fillText(slice.label, radius - 24, 14);
-      ctx.restore();
-    });
-  }
-
-  const spinUserNameInput = document.getElementById("spinUserName");
-  const spinBtn = document.getElementById("spinBtn");
-  const wheelResult = document.getElementById("wheelResult");
-  const wheelCanvas = document.getElementById("wheelCanvas");
-
-  spinUserNameInput.addEventListener("input", () => {
-    if (spinUserNameInput.value.trim().length >= 2 && !isSpinning) {
-      spinBtn.disabled = false;
-      wheelResult.innerHTML = `Welcome <b>${spinUserNameInput.value.trim()}</b>! Click SPIN in the center!`;
-      wheelResult.style.color = "#00e676";
-    } else {
-      spinBtn.disabled = true;
-      wheelResult.innerHTML = "Enter your name above to activate the wheel.";
-      wheelResult.style.color = "#94a3b8";
-    }
-  });
-
-  function generateFakeRedeemCode() {
-    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-    let parts = [];
-    for (let p = 0; p < 4; p++) {
-      let str = "";
-      for (let i = 0; i < 4; i++) str += chars.charAt(Math.floor(Math.random() * chars.length));
-      parts.push(str);
-    }
-    return parts.join("-");
-  }
-
-  // SPIN EVENT HANDLER (FORCED TO INDEX 4: MEGA ₹799)
-  spinBtn.addEventListener("click", () => {
-    if (isSpinning || spinUserNameInput.value.trim().length < 2) return;
-
-    isSpinning = true;
-    spinBtn.disabled = true;
-    spinUserNameInput.disabled = true;
-    wheelResult.innerHTML = "🌀 Spinning the high-roller wheel... High luck detected!";
-    wheelResult.style.color = "#ffd700";
-
-    // Rigged winning target: Index 4 ("Mega ₹799")
-    const winningIndex = 4;
-    const sliceAngle = 360 / spinSlices.length; // 45 deg
-
-    // Top pointer is located at 270 degrees
-    const sliceCenter = winningIndex * sliceAngle + (sliceAngle / 2);
-    const targetOffset = 270 - sliceCenter;
-
-    // 6 full spins + target alignment
-    const fullSpins = 6 * 360;
-    const finalAngle = currentWheelAngle + fullSpins + (targetOffset - (currentWheelAngle % 360));
-
-    currentWheelAngle = finalAngle;
-    wheelCanvas.style.transform = `rotate(${finalAngle}deg)`;
-
-    setTimeout(() => {
-      isSpinning = false;
-      spinBtn.disabled = false;
-      spinUserNameInput.disabled = false;
-
-      const userName = spinUserNameInput.value.trim();
-      const fakeCode = generateFakeRedeemCode();
-
-      wheelResult.innerHTML = `
-        <div style="font-size:18px; color:#ffd700; margin-bottom:4px;">🎉 JACKPOT! 👑</div>
-        <div>Congratulations <b>${userName}</b>! You won <b>Mega ₹799 Redeem Code</b>!</div>
-        <div style="margin-top:8px; padding:6px 14px; background:linear-gradient(135deg, #22c55e, #16a34a); color:#fff; border-radius:8px; font-family:monospace; font-size:15px; font-weight:800; letter-spacing:1px; box-shadow:0 0 15px rgba(34,197,94,0.6);">
-          ${fakeCode}
-        </div>
-      `;
-      wheelResult.style.color = "#22c55e";
-    }, 5600);
-  });
-</script>
-
-<!-- FAQ LOGIC & CANVAS BACKGROUND -->
-<script>
-  function toggleFaq(element) {
-    const answer = element.querySelector('.faq-answer');
-    const symbol = element.querySelector('.faq-question span');
-    if (answer.style.display === 'block') {
-      answer.style.display = 'none';
-      symbol.textContent = '+';
-    } else {
-      answer.style.display = 'block';
-      symbol.textContent = '-';
-    }
-  }
-
-  const canvas = document.getElementById('canvas-bg');
-  const ctx = canvas.getContext('2d');
-  let particlesArray = [];
-  let waveOffset = 0;
-
-  function setCanvasDimensions() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  setCanvasDimensions();
-
-  window.addEventListener('resize', () => {
-    setCanvasDimensions();
-    init();
-  });
-
-  class Particle {
-    constructor(x, y, directionX, directionY, size, color) {
-      this.x = x; this.y = y;
-      this.directionX = directionX; this.directionY = directionY;
-      this.size = size; this.color = color;
-    }
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-      ctx.fillStyle = this.color;
-      ctx.fill();
-    }
-    update() {
-      if (this.x > canvas.width || this.x < 0) { this.directionX = -this.directionX; }
-      if (this.y > canvas.height || this.y < 0) { this.directionY = -this.directionY; }
-      this.x += this.directionX;
-      this.y += this.directionY;
-      this.draw();
-    }
-  }
-
-  function init() {
-    particlesArray = [];
-    let numberOfParticles = (canvas.height * canvas.width) / 12000;
-    for (let i = 0; i < numberOfParticles; i++) {
-      let size = (Math.random() * 2) + 0.5;
-      let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
-      let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
-      let directionX = (Math.random() * 1) - 0.5;
-      let directionY = (Math.random() * 1) - 0.5;
-      let color = 'rgba(255, 74, 74, 0.4)'; 
-      particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
-    }
-  }
-
-  function drawWaveEffect() {
-    waveOffset += 0.02;
-    const waveLayers = [
-      { y: canvas.height * 0.88, length: 0.007, amp: 26, color: 'rgba(255, 74, 74, 0.16)' },
-      { y: canvas.height * 0.91, length: 0.005, amp: 32, color: 'rgba(0, 174, 255, 0.14)' },
-      { y: canvas.height * 0.94, length: 0.009, amp: 20, color: 'rgba(255, 138, 74, 0.18)' }
-    ];
-
-    waveLayers.forEach((layer, idx) => {
-      ctx.beginPath();
-      ctx.moveTo(0, canvas.height);
-      for (let x = 0; x <= canvas.width; x += 5) {
-        const y = layer.y + Math.sin(x * layer.length + waveOffset + idx) * layer.amp;
-        ctx.lineTo(x, y);
-      }
-      ctx.lineTo(canvas.width, canvas.height);
-      ctx.closePath();
-      ctx.fillStyle = layer.color;
-      ctx.fill();
-    });
-  }
-
-  function animate() {
-    requestAnimationFrame(animate);
-    ctx.clearRect(0, 0, innerWidth, innerHeight);
-    drawWaveEffect();
-    for (let i = 0; i < particlesArray.length; i++) {
-      particlesArray[i].update();
-    }
-  }
-  init();
-  animate();
-</script>
 </body>
 </html>
