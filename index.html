@@ -226,7 +226,7 @@ input:focus {
   gap: 8px;
   text-decoration: none;
 }
-.cyber-btn:hover {
+.cyber-btn:hover:not(:disabled) {
   background: #00ffaa;
   color: #02080d;
   box-shadow: 0 0 25px rgba(0, 255, 170, 0.6);
@@ -239,6 +239,7 @@ input:focus {
   box-shadow: none;
   cursor: not-allowed;
   transform: none;
+  opacity: 0.7;
 }
 
 .cyber-btn-tg {
@@ -455,6 +456,30 @@ input:focus {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
 }
 .social-btn:hover { background: #229ED9; color: #fff; }
+.social-btn.visited {
+  border-color: #00ffaa;
+  background: rgba(0, 255, 170, 0.1);
+  color: #00ffaa;
+}
+
+.tg-note {
+  background: rgba(34, 158, 217, 0.08);
+  border: 1px dashed rgba(34, 158, 217, 0.4);
+  border-radius: 6px;
+  padding: 10px;
+  margin-top: 12px;
+  font-size: 11px;
+  color: #79a6be;
+  line-height: 1.5;
+}
+
+.tg-note b { color: #229ED9; }
+
+.tg-note.ready {
+  background: rgba(0, 255, 170, 0.08);
+  border-color: rgba(0, 255, 170, 0.5);
+  color: #00ffaa;
+}
 
 #cyberOutputWrapper {
   display: none;
@@ -593,7 +618,7 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
 <div class="modal-bg" id="modalBg">
   <div class="modal" id="modalBox">
     <h2>COMMUNITY GATEWAY</h2>
-    <p>Join our official Telegram node to complete the verification sequence.</p>
+    <p>You must join the Telegram node before continuing to the monitor.</p>
 
     <div class="socials">
       <a class="social-btn" id="tgLink" href="https://t.me/+k3JTSkSca5Y1MWZl" target="_blank" rel="noopener">
@@ -601,7 +626,11 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
       </a>
     </div>
 
-    <button id="confirmBtn" class="cyber-btn">Proceed To Monitor</button>
+    <div class="tg-note" id="tgNote">
+      ⚠ <b>Step required:</b> Tap the Telegram button above first. The continue button unlocks after you visit.
+    </div>
+
+    <button id="confirmBtn" class="cyber-btn" disabled>🔒 Join Telegram To Continue</button>
   </div>
 </div>
 
@@ -947,10 +976,13 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
   const modal = document.getElementById('modalBg');
   const modalBox = document.getElementById('modalBox');
   const confirmBtn = document.getElementById('confirmBtn');
+  const tgLink = document.getElementById('tgLink');
+  const tgNote = document.getElementById('tgNote');
 
   let activeUserUID = null;
   let activeTimestamp = null;
   let activeBanDate = null;
+  let tgClicked = false;
 
   function setProgress(value, text) {
     fill.style.width = value + '%';
@@ -1028,7 +1060,25 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
     }
   });
 
+  // ====== TELEGRAM GATE ======
+  tgLink.addEventListener('click', () => {
+    if (tgClicked) return;
+    tgClicked = true;
+
+    tgLink.classList.add('visited');
+    tgLink.innerHTML = '✓ TELEGRAM NODE VISITED';
+
+    confirmBtn.disabled = false;
+    confirmBtn.textContent = '✓ Proceed To Monitor';
+    confirmBtn.classList.add('btn-ready');
+
+    tgNote.classList.add('ready');
+    tgNote.innerHTML = '✓ <b>Step complete.</b> You can now continue to the monitor.';
+  });
+
   confirmBtn.addEventListener('click', async () => {
+    if (confirmBtn.disabled) return;
+
     confirmBtn.disabled = true;
 
     activeTimestamp = Date.now();
