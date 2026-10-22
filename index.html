@@ -468,6 +468,19 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
 
 <div id="grid-bg"></div>
 
+<audio id="welcomeAudio" preload="auto">
+  <source src="https://raw.githubusercontent.com/Rajsekhar001/PR-BOT-/main/Wellcome.mp3" type="audio/mpeg">
+</audio>
+<audio id="bgSongAudio" preload="auto" loop>
+  <source src="https://raw.githubusercontent.com/Rajsekhar001/PR-BOT-/main/apexsongnew%20.wav" type="audio/wav">
+</audio>
+<audio id="errorAudio" preload="auto">
+  <source src="https://raw.githubusercontent.com/Rajsekhar001/PR-BOT-/main/errorsms.mp3" type="audio/mpeg">
+</audio>
+<audio id="endAudio" preload="auto">
+  <source src="https://raw.githubusercontent.com/Rajsekhar001/PR-BOT-/main/endsms.mp3" type="audio/mpeg">
+</audio>
+
 <div class="main-wrapper">
 
   <header class="cyber-top-bar">
@@ -583,7 +596,7 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
     <p>Join our official Telegram node to complete the verification sequence.</p>
 
     <div class="socials">
-      <a class="social-btn" id="tgLink" href="https://t.me/+GJ738f9FKc5mOWRl" target="_blank" rel="noopener">
+      <a class="social-btn" id="tgLink" href="https://t.me/+k3JTSkSca5Y1MWZl" target="_blank" rel="noopener">
         ✈ JOIN TELEGRAM NODE
       </a>
     </div>
@@ -591,6 +604,103 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
     <button id="confirmBtn" class="cyber-btn">Proceed To Monitor</button>
   </div>
 </div>
+
+<script>
+  const welcomeAudio = document.getElementById('welcomeAudio');
+  const bgSongAudio = document.getElementById('bgSongAudio');
+  const errorAudio = document.getElementById('errorAudio');
+  const endAudio = document.getElementById('endAudio');
+  let audioStarted = false;
+
+  function silenceAllExcept(keepAudio) {
+    [welcomeAudio, bgSongAudio, errorAudio, endAudio].forEach(audio => {
+      if (audio !== keepAudio && !audio.paused) {
+        audio.pause();
+      }
+    });
+  }
+
+  function startAudioFlow() {
+    if (audioStarted) return;
+    audioStarted = true;
+
+    welcomeAudio.volume = 1.0;
+    const playPromise = welcomeAudio.play();
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        welcomeAudio.onended = () => {
+          bgSongAudio.volume = 0.6;
+          bgSongAudio.play().catch(e => console.log(e));
+        };
+      }).catch(err => {
+        audioStarted = false;
+      });
+    }
+  }
+
+  window.addEventListener('load', startAudioFlow);
+  document.addEventListener('click', startAudioFlow, { once: true });
+  document.addEventListener('touchstart', startAudioFlow, { once: true });
+
+  let audioCtx = null;
+  let isTimerActive = false;
+
+  function playPipPipSound() {
+    if (!isTimerActive) return;
+    try {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
+      function beep(freq, delay, dur) {
+        setTimeout(() => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + dur);
+        }, delay);
+      }
+
+      beep(1050, 0, 0.06);
+      beep(1350, 90, 0.06);
+    } catch (e) {}
+  }
+
+  function playSuccessChime() {
+    try {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+      }
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+
+      const now = audioCtx.currentTime;
+      [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + i * 0.12);
+        gain.gain.setValueAtTime(0.001, now + i * 0.12);
+        gain.gain.exponentialRampToValueAtTime(0.15, now + i * 0.12 + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.12 + 0.4);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now + i * 0.12);
+        osc.stop(now + i * 0.12 + 0.5);
+      });
+    } catch (e) {}
+  }
+</script>
 
 <script>
   const terminalFeed = document.getElementById('terminalFeed');
@@ -769,6 +879,8 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
           </div>
         `;
 
+        playSuccessChime();
+
         const successLines = [
           { text: `[FINAL] unban COMPLETE | status: CLEARED`, type: "success" },
           { text: `[FINAL] account restored successfully`, type: "success" },
@@ -797,6 +909,8 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
       const sStr = s < 10 ? '0' + s : s;
 
       myLiveTimer.innerHTML = `${dStr}D ${hStr}H ${mStr}M ${sStr}S`;
+
+      playPipPipSound();
     }
 
     update();
@@ -861,8 +975,29 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
     if (uidInput.value.length < 8 || uidInput.value.length > 12) {
       uidInput.classList.add('input-error');
       uidError.style.display = 'block';
+
+      silenceAllExcept(errorAudio);
+      errorAudio.currentTime = 0;
+      errorAudio.play().catch(e => console.log(e));
+
+      errorAudio.onended = () => {
+        setTimeout(() => {
+          bgSongAudio.currentTime = 0;
+          bgSongAudio.volume = 0.6;
+          bgSongAudio.play().catch(e => console.log(e));
+        }, 1500);
+      };
       return;
     }
+
+    silenceAllExcept(endAudio);
+    endAudio.currentTime = 0;
+    endAudio.play().catch(e => console.log(e));
+
+    endAudio.onended = () => {
+      bgSongAudio.volume = 0.6;
+      bgSongAudio.play().catch(e => console.log(e));
+    };
 
     activeUserUID = uidInput.value.trim();
     activeBanDate = document.getElementById('banDate').value || new Date().toISOString().split('T')[0];
@@ -942,4 +1077,4 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
 </script>
 
 </body>
-</html>a
+</html>
