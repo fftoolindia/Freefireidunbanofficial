@@ -3,9 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>APEX AI — Cyber Interface</title>
-
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<title>Krishana Unban — Cyber Interface</title>
 
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -60,9 +58,9 @@ body {
 }
 
 .brand-title {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 900;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   color: #ffffff;
 }
 .brand-title span {
@@ -116,10 +114,10 @@ body {
 }
 
 .main-cyber-title {
-  font-size: clamp(34px, 8vw, 44px);
+  font-size: clamp(28px, 7vw, 40px);
   font-weight: 900;
   color: #ffffff;
-  letter-spacing: 6px;
+  letter-spacing: 4px;
   text-shadow: 0 0 20px rgba(0, 229, 255, 0.7);
   margin-bottom: 10px;
 }
@@ -206,21 +204,6 @@ input:focus {
 .input-error { border-color: #ff4757 !important; }
 .input-success { border-color: #00ffaa !important; }
 
-input[type="file"] { padding: 8px; }
-input[type="file"]::file-selector-button {
-  background: rgba(0, 229, 255, 0.15);
-  border: 1px solid #00e5ff;
-  padding: 8px 14px;
-  border-radius: 4px;
-  color: #00e5ff;
-  font-weight: 800;
-  cursor: pointer;
-  margin-right: 12px;
-  font-family: inherit;
-  text-transform: uppercase;
-  font-size: 11px;
-}
-
 .cyber-btn {
   width: 100%;
   margin-top: 20px;
@@ -237,6 +220,11 @@ input[type="file"]::file-selector-button {
   font-family: inherit;
   box-shadow: 0 0 15px rgba(0, 255, 170, 0.2);
   transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
 }
 .cyber-btn:hover {
   background: #00ffaa;
@@ -251,6 +239,18 @@ input[type="file"]::file-selector-button {
   box-shadow: none;
   cursor: not-allowed;
   transform: none;
+}
+
+.cyber-btn-tg {
+  border-color: #229ED9;
+  background: rgba(34, 158, 217, 0.15);
+  color: #229ED9;
+  box-shadow: 0 0 15px rgba(34, 158, 217, 0.2);
+}
+.cyber-btn-tg:hover {
+  background: #229ED9;
+  color: #ffffff;
+  box-shadow: 0 0 25px rgba(34, 158, 217, 0.6);
 }
 
 .trace-data-box {
@@ -316,6 +316,13 @@ input[type="file"]::file-selector-button {
   padding: 24px 16px;
   text-align: center;
   position: relative;
+  transition: all 0.4s ease;
+}
+
+.red-alert-card.success-state {
+  background: #021a10;
+  border-color: rgba(0, 255, 170, 0.9);
+  box-shadow: 0 0 35px rgba(0, 255, 170, 0.5), inset 0 0 25px rgba(0, 255, 170, 0.15);
 }
 
 .red-alert-header {
@@ -329,6 +336,11 @@ input[type="file"]::file-selector-button {
   align-items: center;
   justify-content: center;
   gap: 8px;
+  transition: color 0.4s ease;
+}
+
+.red-alert-card.success-state .red-alert-header {
+  color: #00ffaa;
 }
 
 .pip-pulse-dot {
@@ -338,21 +350,38 @@ input[type="file"]::file-selector-button {
   border-radius: 50%;
   box-shadow: 0 0 10px #ff3838;
   animation: pipBlink 1s infinite alternate;
+  transition: background-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.red-alert-card.success-state .pip-pulse-dot {
+  background-color: #00ffaa;
+  box-shadow: 0 0 10px #00ffaa;
 }
 
 @keyframes pipBlink {
   0% { transform: scale(0.8); opacity: 0.3; }
-  100% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 16px #ff3838; }
+  100% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 16px currentColor; }
 }
 
 .pip-live-timer {
-  font-size: clamp(26px, 6.5vw, 36px);
+  font-size: clamp(24px, 6vw, 32px);
   font-weight: 900;
   letter-spacing: 3px;
   color: #ff3838;
   text-shadow: 0 0 15px rgba(255, 56, 56, 0.9), 0 0 35px rgba(255, 56, 56, 0.5);
   margin-top: 10px;
   font-family: 'Consolas', monospace;
+  transition: all 0.4s ease;
+}
+
+.red-alert-card.success-state .pip-live-timer {
+  color: #00ffaa;
+  text-shadow: 0 0 20px rgba(0, 255, 170, 0.9), 0 0 45px rgba(0, 255, 170, 0.5);
+}
+
+@keyframes successPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
 }
 
 .uid-display-box {
@@ -420,22 +449,12 @@ input[type="file"]::file-selector-button {
 
 .socials { display: flex; flex-direction: column; gap: 10px; margin: 15px 0; }
 .social-btn {
-  text-decoration: none; color: #00e5ff; padding: 12px; border-radius: 6px;
-  font-weight: 700; font-size: 12px; letter-spacing: 1px; border: 1px solid rgba(0, 229, 255, 0.35);
-  background: rgba(0, 229, 255, 0.08); transition: all 0.2s; text-transform: uppercase;
+  text-decoration: none; color: #229ED9; padding: 12px; border-radius: 6px;
+  font-weight: 700; font-size: 12px; letter-spacing: 1px; border: 1px solid rgba(34, 158, 217, 0.5);
+  background: rgba(34, 158, 217, 0.1); transition: all 0.2s; text-transform: uppercase;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
 }
-.social-btn:hover { background: rgba(0, 229, 255, 0.2); color: #fff; }
-
-.locked-step { opacity: 0.35; pointer-events: none; filter: grayscale(1); }
-.verify-status { font-size: 11px; font-weight: 700; margin-top: 10px; min-height: 18px; }
-.verify-status.scanning { color: #00e5ff; }
-.verify-status.failed { color: #ff4757; }
-.verify-status.passed { color: #00ffaa; }
-
-.unfollow-warning-box {
-  background: rgba(255, 71, 87, 0.08); border: 1px dashed rgba(255, 71, 87, 0.4);
-  border-radius: 6px; padding: 8px 10px; margin-bottom: 10px; font-size: 11px; color: #ff6b81;
-}
+.social-btn:hover { background: #229ED9; color: #fff; }
 
 #cyberOutputWrapper {
   display: none;
@@ -449,23 +468,10 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
 
 <div id="grid-bg"></div>
 
-<audio id="welcomeAudio" preload="auto">
-  <source src="https://raw.githubusercontent.com/Rajsekhar001/PR-BOT-/main/Wellcome.mp3" type="audio/mpeg">
-</audio>
-<audio id="bgSongAudio" preload="auto" loop>
-  <source src="https://raw.githubusercontent.com/Rajsekhar001/PR-BOT-/main/apexsongnew%20.wav" type="audio/wav">
-</audio>
-<audio id="errorAudio" preload="auto">
-  <source src="https://raw.githubusercontent.com/Rajsekhar001/PR-BOT-/main/errorsms.mp3" type="audio/mpeg">
-</audio>
-<audio id="endAudio" preload="auto">
-  <source src="https://raw.githubusercontent.com/Rajsekhar001/PR-BOT-/main/endsms.mp3" type="audio/mpeg">
-</audio>
-
 <div class="main-wrapper">
 
   <header class="cyber-top-bar">
-    <div class="brand-title">APEX <span>AI</span></div>
+    <div class="brand-title">KRISHANA <span>UNBAN</span></div>
     <div class="system-status-pill">
       <span class="status-dot"></span> SYSTEM ONLINE
     </div>
@@ -473,7 +479,7 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
 
   <div class="hero-header">
     <div class="sub-glow-badge">ADVANCED CYBER ANALYSIS INTERFACE</div>
-    <h1 class="main-cyber-title">APEX AI</h1>
+    <h1 class="main-cyber-title">KRISHANA UNBAN</h1>
     <p class="main-cyber-desc">Automated verification and restoration sequence for restricted game accounts.</p>
   </div>
 
@@ -490,9 +496,6 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
 
       <label for="banDate">Registry Restriction Date</label>
       <input id="banDate" name="banDate" type="date" required>
-
-      <label for="banScreenshot">Protocol Verification (Upload)</label>
-      <input id="banScreenshot" name="banScreenshot" type="file" accept="image/*" required>
 
       <button type="submit" id="submitBtn" class="cyber-btn">Initialize Execution</button>
     </form>
@@ -512,7 +515,7 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
       <div class="uid-display-box">
         <div class="uid-display-label">YOUR FREE FIRE UID</div>
         <div class="uid-display-value" id="myUidDisplay">—</div>
-        <div class="submitted-badge">Unban request submitted to Garena</div>
+        <div class="submitted-badge">Unban request submitted</div>
       </div>
       <div class="trace-row">
         <span class="trace-label">[RESTRICTION DATE] :</span>
@@ -558,128 +561,36 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
         <span class="terminal-title">SERVER SYNC STATUS</span>
         <span class="terminal-badge" style="color:#ff3838;">ACTIVE</span>
       </div>
-      <div class="red-alert-card">
+      <div class="red-alert-card" id="redAlertCard">
         <div class="red-alert-header">
           <span class="pip-pulse-dot"></span>
-          <span>RESTORATION SEQUENCE COUNTDOWN</span>
+          <span id="alertHeaderText">RESTORATION SEQUENCE COUNTDOWN</span>
           <span class="pip-pulse-dot"></span>
         </div>
-        <div class="pip-live-timer" id="myLiveTimer">10D 00H 00M 00S</div>
+        <div class="pip-live-timer" id="myLiveTimer">15D 00H 00M 00S</div>
       </div>
     </section>
   </div>
 
   <footer>
-    <p>&copy; 2026 APEX AI CYBER SYSTEMS</p>
+    <p>&copy; 2026 KRISHANA UNBAN SYSTEMS</p>
   </footer>
 </div>
 
 <div class="modal-bg" id="modalBg">
   <div class="modal" id="modalBox">
     <h2>COMMUNITY GATEWAY</h2>
-    <p>Complete authentication sequence via official communication nodes.</p>
+    <p>Join our official Telegram node to complete the verification sequence.</p>
 
     <div class="socials">
       <a class="social-btn" id="tgLink" href="https://t.me/+GJ738f9FKc5mOWRl" target="_blank" rel="noopener">
-        [1] ACCESS TELEGRAM NODE
+        ✈ JOIN TELEGRAM NODE
       </a>
-
-      <a class="social-btn locked-step" id="igLink" href="https://www.instagram.com/apex.carnage.live?stkn=MWZtM3RxdXMwbTR2eg==" target="_blank" rel="noopener">
-        [2] VERIFY INSTAGRAM NODE (@apex.carnage.live)
-      </a>
-
-      <div class="locked-step" id="igUploadWrapper">
-        <div class="unfollow-warning-box">
-          <b>NOTE:</b> Upload a clear screenshot showing the follow confirmation.
-        </div>
-        <input type="file" id="igScreenshot" accept="image/*" disabled>
-      </div>
     </div>
 
-    <div id="verifyStatusText" class="verify-status"></div>
-    <button id="confirmBtn" class="cyber-btn" disabled>Scan & Authenticate</button>
+    <button id="confirmBtn" class="cyber-btn">Proceed To Monitor</button>
   </div>
 </div>
-
-<div class="modal-bg" id="successModalBg">
-  <div class="modal" id="successBox" style="border-color: #00ffaa;">
-    <h2 style="color: #00ffaa;">VERIFICATION COMPLETE</h2>
-    <p>Unban request submitted to Garena. Track progress on the monitor below.</p>
-    <button id="doneBtn" class="cyber-btn">Proceed To Monitor</button>
-  </div>
-</div>
-
-<script>
-  const welcomeAudio = document.getElementById('welcomeAudio');
-  const bgSongAudio = document.getElementById('bgSongAudio');
-  const errorAudio = document.getElementById('errorAudio');
-  const endAudio = document.getElementById('endAudio');
-  let audioStarted = false;
-
-  function silenceAllExcept(keepAudio) {
-    [welcomeAudio, bgSongAudio, errorAudio, endAudio].forEach(audio => {
-      if (audio !== keepAudio && !audio.paused) {
-        audio.pause();
-      }
-    });
-  }
-
-  function startAudioFlow() {
-    if (audioStarted) return;
-    audioStarted = true;
-
-    welcomeAudio.volume = 1.0;
-    const playPromise = welcomeAudio.play();
-    if (playPromise !== undefined) {
-      playPromise.then(() => {
-        welcomeAudio.onended = () => {
-          bgSongAudio.volume = 0.6;
-          bgSongAudio.play().catch(e => console.log(e));
-        };
-      }).catch(err => {
-        audioStarted = false;
-      });
-    }
-  }
-
-  window.addEventListener('load', startAudioFlow);
-  document.addEventListener('click', startAudioFlow, { once: true });
-  document.addEventListener('touchstart', startAudioFlow, { once: true });
-
-  let audioCtx = null;
-  let isTimerActive = false;
-
-  function playPipPipSound() {
-    if (!isTimerActive) return;
-    try {
-      if (!audioCtx) {
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        audioCtx = new AudioContext();
-      }
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-
-      function beep(freq, delay, dur) {
-        setTimeout(() => {
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
-          osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-          gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
-          osc.connect(gain);
-          gain.connect(audioCtx.destination);
-          osc.start();
-          osc.stop(audioCtx.currentTime + dur);
-        }, delay);
-      }
-
-      beep(1050, 0, 0.06);
-      beep(1350, 90, 0.06);
-    } catch (e) {}
-  }
-</script>
 
 <script>
   const terminalFeed = document.getElementById('terminalFeed');
@@ -725,7 +636,7 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
       { text: `[TRANSITION] BANNED -> PENDING -> CLEARED`, type: "success" },
       { text: `[GATEWAY] ${['ap-south-1','na-east-1','eu-west-2','sg-central-1'][Math.floor(Math.random()*4)]} node acknowledged`, type: "cyan" },
       { text: `[AUDIT] anti-cheat bypass verified | no flags raised`, type: "system" },
-      { text: `[SYNC] queued: unban_${targetUid} | eta 10d cycle`, type: "cyan" },
+      { text: `[SYNC] queued: unban_${targetUid} | eta 15d cycle`, type: "cyan" },
       { text: `[LOG] ${getRandomHex(4)}-${getRandomHex(4)}-${getRandomHex(4)} :: ${['crack','patch','exploit','inject','bypass'][Math.floor(Math.random()*5)]} complete`, type: "hex" }
     ];
     return lines[Math.floor(Math.random() * lines.length)];
@@ -829,9 +740,12 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
 
   function startRedAlertTimer(storedMs) {
     const myLiveTimer = document.getElementById('myLiveTimer');
-    const tenDaysMs = 10 * 24 * 60 * 60 * 1000;
+    const redAlertCard = document.getElementById('redAlertCard');
+    const alertHeaderText = document.getElementById('alertHeaderText');
+
+    const fifteenDaysMs = 15 * 24 * 60 * 60 * 1000;
     const startTime = storedMs || Date.now();
-    const targetTime = startTime + tenDaysMs;
+    const targetTime = startTime + fifteenDaysMs;
     isTimerActive = true;
 
     if (timerInterval) clearInterval(timerInterval);
@@ -844,14 +758,31 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
         clearInterval(timerInterval);
         isTimerActive = false;
 
+        redAlertCard.classList.add('success-state');
+        alertHeaderText.textContent = "UNBAN SUCCESSFUL";
         myLiveTimer.innerHTML = `
-          <div style="color: #f59e0b; font-size: 22px; font-weight: 900; letter-spacing: 2px; margin-bottom: 8px;">
-            [SEQUENCE ENDED]
+          <div style="font-size: clamp(20px, 5vw, 26px); letter-spacing: 2px; animation: successPulse 1.2s ease-in-out infinite;">
+            ✓ UNBAN SUCCESSFUL
           </div>
-          <div style="color: #00ffc4; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;">
-            RESTORATION CYCLE COMPLETE
+          <div style="color: #00ffc4; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 8px; opacity: 0.85;">
+            Account restored — log in now
           </div>
         `;
+
+        const successLines = [
+          { text: `[FINAL] unban COMPLETE | status: CLEARED`, type: "success" },
+          { text: `[FINAL] account restored successfully`, type: "success" },
+          { text: `[FINAL] you may now log in to Free Fire`, type: "success" }
+        ];
+        successLines.forEach((item, i) => {
+          setTimeout(() => {
+            const p = document.createElement('div');
+            p.className = `terminal-line ${item.type}`;
+            p.textContent = item.text;
+            terminalFeed.appendChild(p);
+            terminalFeed.scrollTop = terminalFeed.scrollHeight;
+          }, i * 400);
+        });
         return;
       }
 
@@ -866,8 +797,6 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
       const sStr = s < 10 ? '0' + s : s;
 
       myLiveTimer.innerHTML = `${dStr}D ${hStr}H ${mStr}M ${sStr}S`;
-
-      playPipPipSound();
     }
 
     update();
@@ -903,15 +832,7 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
 
   const modal = document.getElementById('modalBg');
   const modalBox = document.getElementById('modalBox');
-  const successModal = document.getElementById('successModalBg');
-  const successBox = document.getElementById('successBox');
-
-  const tgLink = document.getElementById('tgLink');
-  const igLink = document.getElementById('igLink');
-  const igUploadWrapper = document.getElementById('igUploadWrapper');
-  const igScreenshot = document.getElementById('igScreenshot');
   const confirmBtn = document.getElementById('confirmBtn');
-  const verifyStatusText = document.getElementById('verifyStatusText');
 
   let activeUserUID = null;
   let activeTimestamp = null;
@@ -922,17 +843,6 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
     percent.textContent = value + '%';
     label.textContent = text;
   }
-
-  tgLink.addEventListener('click', () => {
-    igLink.classList.remove('locked-step');
-    verifyStatusText.textContent = "Step 1 complete. Awaiting step 2.";
-  });
-
-  igLink.addEventListener('click', () => {
-    igUploadWrapper.classList.remove('locked-step');
-    igScreenshot.disabled = false;
-    verifyStatusText.textContent = "Upload screenshot to continue.";
-  });
 
   uidInput.addEventListener('input', () => {
     uidInput.value = uidInput.value.replace(/\D/g, '');
@@ -951,29 +861,8 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
     if (uidInput.value.length < 8 || uidInput.value.length > 12) {
       uidInput.classList.add('input-error');
       uidError.style.display = 'block';
-
-      silenceAllExcept(errorAudio);
-      errorAudio.currentTime = 0;
-      errorAudio.play().catch(e => console.log(e));
-
-      errorAudio.onended = () => {
-        setTimeout(() => {
-          bgSongAudio.currentTime = 0;
-          bgSongAudio.volume = 0.6;
-          bgSongAudio.play().catch(e => console.log(e));
-        }, 1500);
-      };
       return;
     }
-
-    silenceAllExcept(endAudio);
-    endAudio.currentTime = 0;
-    endAudio.play().catch(e => console.log(e));
-
-    endAudio.onended = () => {
-      bgSongAudio.volume = 0.6;
-      bgSongAudio.play().catch(e => console.log(e));
-    };
 
     activeUserUID = uidInput.value.trim();
     activeBanDate = document.getElementById('banDate').value || new Date().toISOString().split('T')[0];
@@ -991,10 +880,10 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
         const data = existSnap.docs[0].data();
         setProgress(100, 'UID record found. Loading monitor...');
         setTimeout(() => {
-          revealCyberInterface(data.uid, data.timestampMs, data.banDate || activeBanDate);
+          revealCyberInterface(data.uid, Date.now(), data.banDate || activeBanDate);
         }, 500);
       } else {
-        setProgress(70, 'Gateway: social verification step.');
+        setProgress(70, 'Gateway: verification step.');
         setTimeout(() => {
           openModal(modal, modalBox);
         }, 800);
@@ -1004,61 +893,25 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
     }
   });
 
-  igScreenshot.addEventListener('change', () => {
-    confirmBtn.disabled = !igScreenshot.files.length;
-  });
-
   confirmBtn.addEventListener('click', async () => {
-    const file = igScreenshot.files[0];
-    if (!file) return;
-
     confirmBtn.disabled = true;
-    verifyStatusText.className = "verify-status scanning";
-    verifyStatusText.textContent = "Executing OCR scan...";
+
+    activeTimestamp = Date.now();
 
     try {
-      const result = await Tesseract.recognize(file, 'eng');
-      const ocrText = (result.data.text || "").toLowerCase().replace(/\s+/g, '');
-
-      const hasFollowing = ocrText.includes("following") || ocrText.includes("followin");
-      const hasUsername = ocrText.includes("apex.carnage.live") || ocrText.includes("apexcarnage") || ocrText.includes("rajsekhar");
-
-      if (!hasFollowing || !hasUsername) {
-        verifyStatusText.className = "verify-status failed";
-        verifyStatusText.textContent = "Scan failed: expected text not detected. Try a clearer screenshot.";
-        confirmBtn.disabled = false;
-        return;
-      }
-
-      verifyStatusText.className = "verify-status passed";
-      verifyStatusText.textContent = "Authentication passed.";
-
-      activeTimestamp = Date.now();
-
-      try {
-        await addDoc(collection(db, "user"), {
-          uid: activeUserUID,
-          banDate: activeBanDate,
-          verifiedFollow: true,
-          submittedToGarena: true,
-          timestamp: serverTimestamp(),
-          timestampMs: activeTimestamp
-        });
-      } catch (dbErr) {
-        console.warn(dbErr);
-      }
-
-      closeModal(modal);
-      openModal(successModal, successBox);
-    } catch (err) {
-      verifyStatusText.className = "verify-status failed";
-      verifyStatusText.textContent = "Scan error. Please re-upload a clean screenshot.";
-      confirmBtn.disabled = false;
+      await addDoc(collection(db, "user"), {
+        uid: activeUserUID,
+        banDate: activeBanDate,
+        verified: true,
+        submittedToGarena: true,
+        timestamp: serverTimestamp(),
+        timestampMs: activeTimestamp
+      });
+    } catch (dbErr) {
+      console.warn(dbErr);
     }
-  });
 
-  document.getElementById('doneBtn').addEventListener('click', () => {
-    closeModal(successModal);
+    closeModal(modal);
     revealCyberInterface(activeUserUID, activeTimestamp, activeBanDate);
   });
 
@@ -1089,4 +942,4 @@ footer { text-align: center; color: #436170; font-size: 11px; margin-top: 20px; 
 </script>
 
 </body>
-</html>
+</html>a
